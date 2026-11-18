@@ -38,6 +38,7 @@
 | [构建与安装](docs/BUILD.md) | 环境要求、两个必踩的坑、无线安装 |
 | [数据迁移](docs/MIGRATION.md) | 从旧 RN 版导入历史记录 |
 | [常见问题](docs/FAQ.md) | BMI 为何不随性别变、阻抗为 0、电量、历史机制 |
+| [技术待办](docs/BACKLOG.md) | 内部清单：已验证待实施的修正、待验证假设、已知局限 |
 
 > 以上六份文档均提供 **6 种语言**版本：简体中文 · [繁體中文](docs/i18n/zh-Hant/README.md) · [日本語](docs/i18n/ja/README.md) · [Deutsch](docs/i18n/de/README.md) · [Suomi](docs/i18n/fi/README.md) · [English](docs/i18n/en/README.md)
 
