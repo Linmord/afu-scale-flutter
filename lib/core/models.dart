@@ -15,9 +15,9 @@ class UserProfile {
   };
   factory UserProfile.fromJson(Map<String, dynamic> j) => UserProfile(
     name: j['name'] as String,
-    sex: j['sex'] as String? ?? 'male',
+    sex: j['sex'] as String? ?? 'female',
     age: (j['age'] as num?)?.toInt() ?? 24,
-    heightCm: (j['heightCm'] as num?)?.toDouble() ?? 168.6,
+    heightCm: (j['heightCm'] as num?)?.toDouble() ?? 163,
     weightKg: (j['weightKg'] as num?)?.toDouble(),
   );
   bool get isMale => sex == 'male';

@@ -175,7 +175,7 @@ class _SettingsPageState extends State<SettingsPage> {
       // 底部版权（固定文案，不随语言变化）
       Center(
         child: Text(
-          '© 2026 Linaiyue. All rights reserved.',
+          '© 2026 Lingaiyue. All rights reserved.',
           style: TextStyle(color: th.AppTheme.textHint, fontSize: 10),
           textAlign: TextAlign.center,
         ),
@@ -533,7 +533,7 @@ class _SettingsPageState extends State<SettingsPage> {
     ]);
   }
 
-  /// 成员档案摘要：「女 · 168.6cm · 24岁」
+  /// 成员档案摘要：「女 · 163cm · 24岁」
   String _profileSubtitle(UserProfile p, S s) {
     final parts = <String>[p.isMale ? s.sexMale : s.sexFemale];
     if (p.heightCm > 0) parts.add(p.heightCm.toStringAsFixed(1) + 'cm');
@@ -541,7 +541,7 @@ class _SettingsPageState extends State<SettingsPage> {
     return parts.join(' · ');
   }
 
-  /// 孤儿记录摘要：「女 · 168.6cm · 24岁 · 12 条记录」（旧档案缺失时只显示条数）
+  /// 孤儿记录摘要：「女 · 163cm · 24岁 · 12 条记录」（旧档案缺失时只显示条数）
   String _orphanSubtitle(OrphanUnitInfo info, S s) {
     final parts = <String>[];
     final p = info.profile;

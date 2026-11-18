@@ -15,10 +15,10 @@ class OnboardingPage extends StatefulWidget {
 class _OnboardingPageState extends State<OnboardingPage> {
   int _step = 0;
   final _name = TextEditingController();
-  String _sex = 'male';
+  String _sex = 'female';
   final _age = TextEditingController(text: '24');
-  final _height = TextEditingController(text: '168.6');
-  final _weight = TextEditingController();
+  final _height = TextEditingController(text: '163');
+  final _weight = TextEditingController(text: '55.75');
   bool _saving = false;
 
   @override
@@ -38,7 +38,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
       name: _name.text.trim(),
       sex: _sex,
       age: int.tryParse(_age.text) ?? 24,
-      heightCm: double.tryParse(_height.text) ?? 168.6,
+      heightCm: double.tryParse(_height.text) ?? 163,
       weightKg: double.tryParse(_weight.text),
     );
     await saveProfiles([profile]);
@@ -166,9 +166,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
         _label(s.ageLabel),
         _field(_age, '24', true, 3),
         _label(s.heightLabel),
-        _field(_height, '168.6', true, 6),
+        _field(_height, '163', true, 6),
         _label(s.weightLabel + ' ' + s.optional),
-        _field(_weight, '80', true, 6),
+        _field(_weight, '55.75', true, 6),
         const SizedBox(height: 18),
         FilledButton(
           onPressed: _valid && !_saving ? _saveProfileAndNext : null,

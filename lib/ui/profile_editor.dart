@@ -36,9 +36,9 @@ class _ProfileEditorPageState extends State<_ProfileEditorPage> {
     final e = widget.existing;
     _name = TextEditingController(text: e?.name ?? '');
     _age = TextEditingController(text: (e?.age ?? 24).toString());
-    _height = TextEditingController(text: (e?.heightCm ?? 168.6).toString());
+    _height = TextEditingController(text: (e?.heightCm ?? 163).toString());
     _weight = TextEditingController(text: e?.weightKg?.toString() ?? '');
-    _sex = e?.sex ?? 'male';
+    _sex = e?.sex ?? 'female';
   }
 
   @override
@@ -58,7 +58,7 @@ class _ProfileEditorPageState extends State<_ProfileEditorPage> {
       name: _name.text.trim(),
       sex: _sex,
       age: int.tryParse(_age.text) ?? 24,
-      heightCm: double.tryParse(_height.text) ?? 168.6,
+      heightCm: double.tryParse(_height.text) ?? 163,
       weightKg: double.tryParse(_weight.text),
     );
     final old = widget.existing;
