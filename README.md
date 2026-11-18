@@ -3,7 +3,9 @@
 **AFU-WL-TZ-A1**（蚂蚁阿福 × 沃莱 ICOMON）体脂秤的 Android 客户端 · Flutter 重写版  
 本地优先 · 无账号 · 无云同步 · 5 语言 · 深浅双主题
 
-![主页](docs/screenshots/home.jpg)
+<p align="center">
+  <img src="docs/screenshots/home.jpg" width="280" alt="AFU 主页">
+</p>
 
 ## 特性
 
