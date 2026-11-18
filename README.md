@@ -1,5 +1,10 @@
 # AFU
 
+<p align="center">
+  <b>简体中文</b> &middot; <a href="docs/i18n/zh-Hant/README.md">繁體中文</a> &middot; <a href="docs/i18n/ja/README.md">日本語</a> &middot; <a href="docs/i18n/de/README.md">Deutsch</a> &middot; <a href="docs/i18n/fi/README.md">Suomi</a> &middot; <a href="docs/i18n/en/README.md">English</a>
+</p>
+
+
 **AFU-WL-TZ-A1**（蚂蚁阿福 × 沃莱 ICOMON）体脂秤的 Android 客户端 · Flutter 重写版  
 本地优先 · 无账号 · 无云同步 · 5 语言 · 深浅双主题
 
@@ -27,11 +32,14 @@
 
 | 文档 | 内容 |
 | --- | --- |
-| [协议实现](docs/PROTOCOL.md) | **通俗版**：从"怎么找到秤"讲到"字节怎么变成体重"，含 10 个实测坑 |
+| [协议 · 通俗版](docs/PROTOCOL.md) | 从"怎么找到秤"讲到"字节怎么变成体重"，含 10 个实测坑 |
+| [协议 · 规格版](docs/PROTOCOL_SPEC.md) | 面向实现者的技术规格：字段级定义、状态机、测试向量、一致性清单 |
 | [体成分算法](docs/ALGORITHM.md) | 体脂率/水分/肌肉/骨骼肌怎么算出来的，含公式与系数来源标注 |
 | [构建与安装](docs/BUILD.md) | 环境要求、两个必踩的坑、无线安装 |
 | [数据迁移](docs/MIGRATION.md) | 从旧 RN 版导入历史记录 |
 | [常见问题](docs/FAQ.md) | BMI 为何不随性别变、阻抗为 0、电量、历史机制 |
+
+> 以上六份文档均提供 **6 种语言**版本：简体中文 · [繁體中文](docs/i18n/zh-Hant/README.md) · [日本語](docs/i18n/ja/README.md) · [Deutsch](docs/i18n/de/README.md) · [Suomi](docs/i18n/fi/README.md) · [English](docs/i18n/en/README.md)
 
 ## 快速开始
 
