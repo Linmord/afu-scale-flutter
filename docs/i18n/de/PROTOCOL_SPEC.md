@@ -52,7 +52,7 @@ Aufbau der Service-Data-AD:
 
 Rekonstruktionsalgorithmus:
   mac = reverse(serviceData[3..8])
-  → B0:82:AB:07:76:24
+  → AA:BB:CC:DD:EE:FF
 ```
 
 - `MUST` die 6 Bytes zuerst umdrehen und erst dann formatieren; liest man sie direkt in Folge, erhält man eine falsche Adresse.
@@ -229,7 +229,7 @@ f[2..9] = 01  00  01  HH  WH  WL  AA  SS
 | subcmd | `p[0]` | 1 | `0x01` | — |
 | reserved | `p[1]` | 1 | `0x00` | — |
 | magic | `p[2]` | 1 | `0x01` | fest |
-| height | `p[3]` | 1 | 1..255 | cm, **abgeschnitten** (168.6 -> 168) |
+| height | `p[3]` | 1 | 1..255 | cm, **abgeschnitten** (165.4 -> 165) |
 | weight | `p[4..5]` | 2 | 0..65535 | `round(kg * 100)`, u16 BE |
 | age | `p[6]` | 1 | 1..255 | ganze Jahre |
 | sex | `p[7]` | 1 | 1 / 2 | **1=männlich, 2=weiblich** (kein boolesches 0/1) |

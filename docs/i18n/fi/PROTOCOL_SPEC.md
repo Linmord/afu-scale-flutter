@@ -52,7 +52,7 @@ Service Data AD -rakenne:
 
 palautusalgoritmi:
   mac = reverse(serviceData[3..8])
-  → B0:82:AB:07:76:24
+  → AA:BB:CC:DD:EE:FF
 ```
 
 - `MUST` kääntää 6 tavua ennen muotoilua, suoraan peräkkäin lukemalla saa väärän osoitteen.
@@ -229,7 +229,7 @@ f[2..9] = 01  00  01  HH  WH  WL  AA  SS
 | subcmd | `p[0]` | 1 | `0x01` | — |
 | reserved | `p[1]` | 1 | `0x00` | — |
 | magic | `p[2]` | 1 | `0x01` | kiinteä |
-| height | `p[3]` | 1 | 1..255 | cm, **kokonaisluvuksi katkaisten** (168.6 -> 168) |
+| height | `p[3]` | 1 | 1..255 | cm, **kokonaisluvuksi katkaisten** (165.4 -> 165) |
 | weight | `p[4..5]` | 2 | 0..65535 | `round(kg * 100)`, u16 BE |
 | age | `p[6]` | 1 | 1..255 | kokonaiset vuodet |
 | sex | `p[7]` | 1 | 1 / 2 | **1=mies, 2=nainen** (ei boolean 0/1) |

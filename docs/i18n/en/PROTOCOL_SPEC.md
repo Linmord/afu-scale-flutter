@@ -52,7 +52,7 @@ Service Data AD layout:
 
 Recovery algorithm:
   mac = reverse(serviceData[3..8])
-  → B0:82:AB:07:76:24
+  → AA:BB:CC:DD:EE:FF
 ```
 
 - `MUST` reverse the 6 bytes before formatting; reading them in order yields the wrong address.
@@ -229,7 +229,7 @@ f[2..9] = 01  00  01  HH  WH  WL  AA  SS
 | subcmd | `p[0]` | 1 | `0x01` | — |
 | reserved | `p[1]` | 1 | `0x00` | — |
 | magic | `p[2]` | 1 | `0x01` | fixed |
-| height | `p[3]` | 1 | 1..255 | cm, **truncated** (168.6 -> 168) |
+| height | `p[3]` | 1 | 1..255 | cm, **truncated** (165.4 -> 165) |
 | weight | `p[4..5]` | 2 | 0..65535 | `round(kg * 100)`, u16 BE |
 | age | `p[6]` | 1 | 1..255 | whole years |
 | sex | `p[7]` | 1 | 1 / 2 | **1=male, 2=female** (not the boolean 0/1) |

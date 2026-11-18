@@ -40,7 +40,7 @@ Bluetoothissa on paljon termejä, ensi katsomalla menee sekaisin. Käytetään *
 | **Kirjoitus (Write)** | sinä työnnät paketin sisään | puhelin → laite, datan lähetys |
 | **Ilmoitus (Notify)** | lokero täyttyy ja työntää itse ilmoituksen | laite → puhelin, laite lähettää oma-aloitteisesti (puhelimen ei tarvitse kysyä) |
 | **UUID** | lokeron numero, esim. `0000ffb0-...` | 128-bittinen (16 tavua) numero, joka yksilöi palvelun/säleen |
-| **MAC-osoite** | henkilötunnus | Bluetooth-laitteen yksilöllinen laiteosoite, esim. `B0:82:AB:07:76:24` |
+| **MAC-osoite** | henkilötunnus | Bluetooth-laitteen yksilöllinen laiteosoite, esim. `AA:BB:CC:DD:EE:FF` |
 | **Tavujärjestys (big-endian / little-endian)** | luku 1234 on "kirjoitetaanko 1 ensin vai 4 ensin" | kun useasta tavusta kootaan yksi luku, onko suurin tavu ensin vai viimeisenä |
 
 **Miksi tavujärjestys pitää tuntea**: myöhemmin huomaat, että sama paino esiintyy vaa'alla kahdessa eri paketissa, toisessa **big-endianina** ja toisessa **little-endianina**,
@@ -68,7 +68,7 @@ Vaa'an mainonnassa on nämä asiat (vahvistimme nRF Connectillä ja järjestelm�
 ```
                           └─── 6 tavua ───┘ └┘  ← käänteisenä lukeva MAC + kiinteä 01
                           └─── 6 tavua käänteisenä ───┘ └(kiinteä 01)
-kääntäen luettuna:        B0:82:AB:07:76:24   ← tämä on todellinen MAC
+kääntäen luettuna:        AA:BB:CC:DD:EE:FF   ← tämä on todellinen MAC
 ```
 
 > Ensimmäisellä jäsennyksellä emme huomanneet "käänteisyyttä", joten MAC oli yhden tavun verran pielessä eikä yhteys onnistunut millään. [WT/mitattu]
@@ -245,7 +245,7 @@ Joten 55,75 kg tallentuu muotoon `5575` = heksadesimaalina `0x16 0b`.
 
 **④ Pituus tallennetaan vain kokonaislukuna**
 
-Pituus vie vain 1 tavun (enintään 255 cm), joten 168,6 cm muuttuu **168**:ksi.
+Pituus vie vain 1 tavun (enintään 255 cm), joten 165,4 cm muuttuu **165**:ksi.
 
 **⑤ Mistä nämä arvot tulevat**
 

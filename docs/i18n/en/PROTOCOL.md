@@ -40,7 +40,7 @@ Bluetooth has a pile of jargon that confuses you the first time. Take a **parcel
 | **Write** | You stuff a parcel in | Phone → device sends data |
 | **Notify** | The locker pushes you a WeChat alert when it is full | Device → phone sends data proactively (no need for the phone to ask) |
 | **UUID** | The locker's number, e.g. `0000ffb0-...` | A 128-bit (16-byte) number identifying some service or compartment |
-| **MAC address** | An ID card number | The unique hardware address of a Bluetooth device, e.g. `B0:82:AB:07:76:24` |
+| **MAC address** | An ID card number | The unique hardware address of a Bluetooth device, e.g. `AA:BB:CC:DD:EE:FF` |
 | **Byte order (big-endian / little-endian)** | Whether the number 1234 is written "1 first or 4 first" | When several bytes make one number, whether the high bits come first or the low bits come first |
 
 **Why you need to know byte order**: later you will find that for the same weight, the scale uses **big-endian** in one kind of packet and **little-endian** in the other,
@@ -66,9 +66,9 @@ The scale's advertising carries these few things (we cross-checked with nRF Conn
 **is not necessarily the scale's real MAC**. The real value hides inside ServiceData, and it is **stored backwards**.
 
 ```
-ServiceData raw bytes:  24 76 07 AB 82 B0 01
+ServiceData raw bytes:  FF EE DD CC BB AA 01
                         └── 6B reversed ─────┘  └(fixed 01)
-Read backwards:         B0:82:AB:07:76:24   ← the real MAC
+Read backwards:         AA:BB:CC:DD:EE:FF   ← the real MAC
 ```
 
 > The first time we parsed this we overlooked "reversed order"; the MAC came out one position off and nothing would connect. [WT/tested]
@@ -245,7 +245,7 @@ So 55.75kg is stored as `5575` = hexadecimal `0x16 0b`.
 
 **④ Height stores integers only**
 
-Height occupies 1 byte only (maximum 255cm), so 168.6cm becomes **168**.
+Height occupies 1 byte only (maximum 255cm), so 165.4cm becomes **165**.
 
 **⑤ Where these values come from**
 

@@ -40,7 +40,7 @@ In Bluetooth gibt es einen Haufen Fachbegriffe, die beim ersten Kontakt verwirre
 | **Write (Schreiben)** | du wirfst ein Paket hinein | Smartphone → Gerät: Daten senden |
 | **Benachrichtigung (Notify)** | das Fach meldet sich aktiv, wenn es voll ist | Gerät → Smartphone: Daten unaufgefordert senden (ohne dass das Smartphone fragt) |
 | **UUID** | die Nummer des Fachs, z. B. `0000ffb0-...` | eine 128 Bit (16 Byte) lange Nummer, die einen Dienst bzw. ein Ablagefach kennzeichnet |
-| **MAC-Adresse** | die Ausweisnummer | die eindeutige Hardwareadresse eines Bluetooth-Geräts, z. B. `B0:82:AB:07:76:24` |
+| **MAC-Adresse** | die Ausweisnummer | die eindeutige Hardwareadresse eines Bluetooth-Geräts, z. B. `AA:BB:CC:DD:EE:FF` |
 | **Byte-Reihenfolge (Big-Endian / Little-Endian)** | ob die Zahl 1234 als „erst 1 oder erst 4“ geschrieben wird | ob beim Zusammensetzen mehrerer Bytes zu einer Zahl das höchstwertige Byte vorn oder hinten steht |
 
 **Warum man die Byte-Reihenfolge kennen muss**: später wirst du sehen, dass die Waage dasselbe Gewicht in zwei Pakettypen einmal **Big-Endian** und einmal **Little-Endian** ablegt;
@@ -66,9 +66,9 @@ Das Advertising der Waage trägt Folgendes (wir haben es mit nRF Connect und den
 ist **nicht unbedingt die echte MAC der Waage**. Der echte Wert steckt in den ServiceData – und zwar **rückwärts abgelegt**.
 
 ```
-ServiceData-Rohbytes:   24 76 07 AB 82 B0 01
+ServiceData-Rohbytes:   FF EE DD CC BB AA 01
                         └─MAC (6B) rev.─┘ └(fest 01)
-Rückwärts gelesen:      B0:82:AB:07:76:24   ← erst das ist die echte MAC
+Rückwärts gelesen:      AA:BB:CC:DD:EE:FF   ← erst das ist die echte MAC
 ```
 
 > Beim ersten Parsing haben wir das „rückwärts“ übersehen; die MAC war dadurch um ein Byte verschoben und eine Verbindung kam partout nicht zustande. [WT/Praxis]
@@ -245,7 +245,7 @@ Das Gewicht belegt 2 Bytes (maximal 65535), die Einheit ist „Hundertstel Kilog
 
 **④ Die Größe wird nur als ganze Zahl gespeichert**
 
-Die Größe belegt nur 1 Byte (maximal 255 cm), aus 168.6 cm wird daher **168**.
+Die Größe belegt nur 1 Byte (maximal 255 cm), aus 165.4 cm wird daher **165**.
 
 **⑤ Woher diese Werte kommen**
 
