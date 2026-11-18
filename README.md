@@ -4,8 +4,14 @@
 本地优先 · 无账号 · 无云同步 · 5 语言 · 深浅双主题
 
 <p align="center">
-  <img src="docs/screenshots/home.jpg" width="280" alt="AFU 主页">
+  <img src="docs/screenshots/home.jpg" width="200" alt="数据页">
+  &nbsp;&nbsp;
+  <img src="docs/screenshots/sett.jpeg" width="200" alt="功能一览">
+  &nbsp;&nbsp;
+  <img src="docs/screenshots/proto.jpeg" width="200" alt="通讯日志">
 </p>
+
+<p align="center"><sub>数据页 · 功能一览 · 通讯日志（调试模式下可见）</sub></p>
 
 ## 特性
 
