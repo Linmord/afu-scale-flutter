@@ -25,7 +25,7 @@ class StoreKeys {
   static const syncUrl = 'afu_sync_url';
 
   /// 默认同步地址。
-  static const defaultSyncUrl = 'http://192.168.1.5:8765/records';
+  static const defaultSyncUrl = 'http://192.168.1.100:8765/records';
 }
 
 /// 目标体重 JSON 结构：{ weightKg: double, enabled: bool }

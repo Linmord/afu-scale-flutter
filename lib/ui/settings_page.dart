@@ -435,7 +435,7 @@ class _SettingsPageState extends State<SettingsPage> {
           keyboardType: TextInputType.url,
           autofocus: true,
           style: TextStyle(color: th.AppColors.text, fontFamily: 'monospace', fontSize: 13),
-          decoration: const InputDecoration(hintText: 'http://192.168.1.5:8765/records'),
+          decoration: const InputDecoration(hintText: 'http://192.168.1.100:8765/records'),
         ),
       ],
     );

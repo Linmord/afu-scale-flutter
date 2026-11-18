@@ -177,7 +177,7 @@ class _DeviceScanPanelState extends State<DeviceScanPanel> {
           controller: macCtrl,
           autofocus: true,
           style: TextStyle(color: th.AppColors.text, fontFamily: 'monospace'),
-          decoration: const InputDecoration(hintText: 'B0:82:AB:07:76:24'),
+          decoration: const InputDecoration(hintText: 'AA:BB:CC:DD:EE:FF'),
         ),
         if (err != null) formHint(err!),
         formLabel(S.of(context).devName),
