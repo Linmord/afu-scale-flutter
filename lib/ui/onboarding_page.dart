@@ -179,6 +179,23 @@ class _OnboardingPageState extends State<OnboardingPage> {
             padding: const EdgeInsets.only(top: 10),
             child: Center(child: Text(s.profileRequired, style: TextStyle(color: th.AppColors.warn, fontSize: 12))),
           ),
+        // ── 计算模型偏差提示（首次引导即告知）──
+        Padding(
+          padding: const EdgeInsets.only(top: 14),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(Icons.info_outline_rounded, size: 13, color: th.AppColors.warn),
+              const SizedBox(width: 7),
+              Expanded(
+                child: Text(
+                  s.calcModelHint,
+                  style: TextStyle(fontSize: 10.5, height: 1.6, color: th.AppColors.textHint),
+                ),
+              ),
+            ],
+          ),
+        ),
       ],
     ),
   );

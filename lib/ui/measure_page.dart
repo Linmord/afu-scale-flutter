@@ -50,7 +50,6 @@ class MeasurePageState extends State<MeasurePage> with TickerProviderStateMixin 
   Timer? _connectTimer;
   int _connectWatchToken = 0;
   bool _debugMode = false; // 彩蛋：默认隐藏通讯入口
-  String _bfAlgo = 'officialAnt';
   late final AnimationController _cardsIn;
   late final AnimationController _deviceCardIn;
   BoundDevice? _device;
@@ -75,8 +74,7 @@ class MeasurePageState extends State<MeasurePage> with TickerProviderStateMixin 
 
   Future<void> _loadDebugMode() async {
     final v = await getDebugMode();
-    final a = await getBfAlgo();
-    if (mounted) setState(() { _debugMode = v; _bfAlgo = a; });
+    if (mounted) setState(() => _debugMode = v);
   }
 
   Future<void> _loadUnit() async {
@@ -251,7 +249,6 @@ class MeasurePageState extends State<MeasurePage> with TickerProviderStateMixin 
         age: p.age,
         sex: p.sex,
         impedances: [t.impedance1 ?? 0, t.impedance2 ?? 0],
-        algo: _bfAlgo,
       );
     }
     await appendRecord(MeasurementRecord(
@@ -331,7 +328,6 @@ class MeasurePageState extends State<MeasurePage> with TickerProviderStateMixin 
             age: _active.age,
             sex: _active.sex,
             impedances: [tick.impedance1 ?? 0, tick.impedance2 ?? 0],
-            algo: _bfAlgo,
           )
         : null;
     return Scaffold(

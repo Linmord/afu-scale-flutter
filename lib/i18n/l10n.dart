@@ -425,11 +425,9 @@ const Map<String, String> _ja = {
   'myScale': '体重計',
   'searchingNearby': '近くの AFU 体重計を検索中…',
   'noDeviceFound': 'デバイスが見つかりません。体重計を軽く踏んで起こしてから再試行してください',
-  'bfAlgoSection': '体脂肪率の計算方式',
-  'bfAlgoHint': '体成分の計算に使うアルゴリズムを選びます。切り替えると過去の記録も新しい方式で再計算されます。',
-  'algoOfficial': '公式準拠',
-  'algoDeurenberg': 'Deurenberg式',
-  'algoSegal': 'Segal式',
+  'calcModel': '計算モデル',
+  'calcModelValue': '公式非公開・独自推計',
+  'calcModelHint': '体脂肪率などの身体組成は、本アプリ独自の推定式で計算しています。公式アプリの算出方法は非公開のため、表示値が公式と異なる場合があります（通常は数ポイント以内）。体重とBMIは実測値どおりです。',
 };
 
 const Map<String, String> _zhHans = {
@@ -691,11 +689,9 @@ const Map<String, String> _zhHans = {
   'myScale': '体脂秤',
   'searchingNearby': '正在搜索附近的 AFU 体脂秤…',
   'noDeviceFound': '未发现设备，可轻踩唤醒体脂秤后重试',
-  'bfAlgoSection': '体脂率算法',
-  'bfAlgoHint': '选择体成分的计算公式。切换后会按新算法重算全部历史记录。',
-  'algoOfficial': '官方对齐',
-  'algoDeurenberg': 'Deurenberg式',
-  'algoSegal': 'Segal式',
+  'calcModel': '计算模型',
+  'calcModelValue': '自研公式 · 与官方不同',
+  'calcModelHint': '体脂率等身体成分由本 App 的独立估算公式计算。官方算法的具体实现未公开，因此显示数值可能与官方 App 存在差异（通常在几个百分点内）。体重与 BMI 为实测值，不受影响。',
 };
 
 const Map<String, String> _zhHant = {
@@ -957,11 +953,9 @@ const Map<String, String> _zhHant = {
   'myScale': '體脂秤',
   'searchingNearby': '正在搜尋附近的 AFU 體脂秤…',
   'noDeviceFound': '未發現裝置，可輕踩喚醒體脂秤後重試',
-  'bfAlgoSection': '體脂率演算法',
-  'bfAlgoHint': '選擇體成分的計算公式。切換後會按新演算法重算全部歷史記錄。',
-  'algoOfficial': '官方對齊',
-  'algoDeurenberg': 'Deurenberg式',
-  'algoSegal': 'Segal式',
+  'calcModel': '計算模型',
+  'calcModelValue': '自研公式 · 與官方不同',
+  'calcModelHint': '體脂率等身體成分由本 App 的獨立估算公式計算。官方演算法的具體實作未公開，因此顯示數值可能與官方 App 存在差異（通常在幾個百分點內）。體重與 BMI 為實測值，不受影響。',
 };
 
 const Map<String, String> _de = {
@@ -1223,11 +1217,9 @@ const Map<String, String> _de = {
   'myScale': 'Waage',
   'searchingNearby': 'Suche AFU-Waagen in der Nähe…',
   'noDeviceFound': 'Kein Gerät gefunden – Waage kurz antippen und erneut suchen',
-  'bfAlgoSection': 'Körperfett-Formel',
-  'bfAlgoHint': 'Wähle die Formel für die Körperanalyse. Beim Wechsel werden alle bisherigen Messungen neu berechnet.',
-  'algoOfficial': 'App-konform',
-  'algoDeurenberg': 'Deurenberg',
-  'algoSegal': 'Segal',
+  'calcModel': 'Berechnungsmodell',
+  'calcModelValue': 'Eigene Formel, abweichend',
+  'calcModelHint': 'Körperzusammensetzung wie Körperfett wird mit einer eigenen Schätzformel dieser App berechnet. Die offizielle App veröffentlicht ihren Algorithmus nicht, daher können die Werte von der offiziellen App abweichen (meist wenige Prozentpunkte). Gewicht und BMI sind Messwerte und nicht betroffen.',
 };
 
 const Map<String, String> _en = {
@@ -1489,11 +1481,9 @@ const Map<String, String> _en = {
   'myScale': 'Scale',
   'searchingNearby': 'Searching nearby AFU scales…',
   'noDeviceFound': 'No device found — tap the scale to wake it and retry',
-  'bfAlgoSection': 'Body Fat Formula',
-  'bfAlgoHint': 'Choose the formula used for body composition. Switching recalculates all past records with the new formula.',
-  'algoOfficial': 'Official',
-  'algoDeurenberg': 'Deurenberg',
-  'algoSegal': 'Segal',
+  'calcModel': 'Calculation model',
+  'calcModelValue': 'Custom formula, not official',
+  'calcModelHint': 'Body composition such as body fat is estimated with this app\'s own formula. The official app does not disclose its algorithm, so values may differ from the official app (usually within a few percentage points). Weight and BMI are measured values and are unaffected.',
 };
 
 
@@ -1573,6 +1563,9 @@ class S {
   String get connecting => _strings['connecting']!;
   String get copiedMac => _strings['copiedMac']!;
   String get credits => _strings['credits']!;
+  String get calcModel => _strings['calcModel']!;
+  String get calcModelValue => _strings['calcModelValue']!;
+  String get calcModelHint => _strings['calcModelHint']!;
   String get creditsDesc => _strings['creditsDesc']!;
   String get creditsLicense => _strings['creditsLicense']!;
   String get customRange => _strings['customRange']!;
@@ -1791,12 +1784,6 @@ class S {
   String get myScale => _strings['myScale']!;
   String get searchingNearby => _strings['searchingNearby']!;
   String get noDeviceFound => _strings['noDeviceFound']!;
-
-  String get bfAlgoSection => _strings['bfAlgoSection']!;
-  String get bfAlgoHint => _strings['bfAlgoHint']!;
-  String get algoOfficial => _strings['algoOfficial']!;
-  String get algoDeurenberg => _strings['algoDeurenberg']!;
-  String get algoSegal => _strings['algoSegal']!;
 
   /// 带 {n} 占位符的文案：`historySynced`。
   String historySynced(int n) =>
