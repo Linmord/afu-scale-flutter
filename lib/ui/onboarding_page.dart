@@ -13,7 +13,9 @@ class OnboardingPage extends StatefulWidget {
   @override State<OnboardingPage> createState() => _OnboardingPageState();
 }
 
-class _OnboardingPageState extends State<OnboardingPage> {
+class _OnboardingPageState extends State<OnboardingPage>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _entrance;
   int _step = 0;
   final _name = TextEditingController();
   String _sex = 'female';
@@ -23,7 +25,17 @@ class _OnboardingPageState extends State<OnboardingPage> {
   bool _saving = false;
 
   @override
+  void initState() {
+    super.initState();
+    _entrance = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 620),
+    )..forward();
+  }
+
+  @override
   void dispose() {
+    _entrance.dispose();
     _name.dispose(); _height.dispose(); _weight.dispose();
     super.dispose();
   }
@@ -52,14 +64,19 @@ class _OnboardingPageState extends State<OnboardingPage> {
   @override
   Widget build(BuildContext context) {
     final s = S.of(context);
+    final eased = CurvedAnimation(parent: _entrance, curve: Curves.easeOutCubic);
     return Scaffold(
       backgroundColor: th.AppColors.bg,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.fromLTRB(20, 20, 20, 28),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
+          child: FadeTransition(
+            opacity: eased,
+            child: SlideTransition(
+              position: Tween<Offset>(begin: const Offset(0, 0.045), end: Offset.zero).animate(eased),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
               Center(
                 child: Container(
                   width: 60, height: 60,
@@ -84,15 +101,135 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 child: Text(s.appTagline, style: TextStyle(color: th.AppColors.textHint, fontSize: 12)),
               ),
               const SizedBox(height: 18),
+              _langCard(s),
+              const SizedBox(height: 16),
               _stepIndicator(s),
               const SizedBox(height: 18),
               AnimatedSwitcher(
-                duration: const Duration(milliseconds: 260),
+                duration: const Duration(milliseconds: 340),
+                switchInCurve: Curves.easeOutCubic,
+                switchOutCurve: Curves.easeInCubic,
+                transitionBuilder: (child, anim) => FadeTransition(
+                  opacity: anim,
+                  child: SlideTransition(
+                    position: Tween<Offset>(begin: const Offset(0.06, 0), end: Offset.zero)
+                        .animate(anim),
+                    child: child,
+                  ),
+                ),
                 child: _step == 0 ? _buildProfileStep(s) : _buildBindStep(s),
+              ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// 语言选择卡：首次启动即高亮呈现，双列大按钮，明确是第一步。
+  Widget _langCard(S s) {
+    final loc = AppLocale.of(context);
+    final current = loc.isSystem ? s.followSystem : S(loc.resolvedCode).nativeName;
+    return Container(
+      padding: const EdgeInsets.fromLTRB(14, 13, 14, 14),
+      decoration: BoxDecoration(
+        color: th.AppColors.surface,
+        borderRadius: BorderRadius.circular(th.AppRadius.lg),
+        border: Border.all(color: th.AppColors.primary.withValues(alpha: 0.35), width: 1.2),
+        boxShadow: th.AppShadows.soft,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 26, height: 26,
+                decoration: BoxDecoration(
+                  color: th.AppColors.primarySoft,
+                  borderRadius: BorderRadius.circular(9),
+                ),
+                alignment: Alignment.center,
+                child: Icon(Icons.translate_rounded, size: 15, color: th.AppColors.primary),
+              ),
+              const SizedBox(width: 9),
+              Text(
+                s.language,
+                style: TextStyle(fontSize: 13.5, fontWeight: FontWeight.w800, color: th.AppColors.text),
+              ),
+              const SizedBox(width: 8),
+              Flexible(
+                child: Text(
+                  current,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.right,
+                  style: TextStyle(fontSize: 11, color: th.AppColors.primaryDeep, fontWeight: FontWeight.w700),
+                ),
               ),
             ],
           ),
-        ),
+          const SizedBox(height: 4),
+          Text(
+            s.languageHint,
+            style: TextStyle(fontSize: 10.5, height: 1.5, color: th.AppColors.textHint),
+          ),
+          const SizedBox(height: 11),
+          LayoutBuilder(
+            builder: (ctx, c) {
+              final half = (c.maxWidth - 8) / 2;
+              return Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: supportedLangCodes.map((code) {
+                  final active = !loc.isSystem && loc.resolvedCode == code;
+                  return SizedBox(
+                    width: half,
+                    child: GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: () => loc.setLang(code),
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 200),
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        decoration: BoxDecoration(
+                          color: active ? th.AppColors.primary : th.AppColors.surfaceAlt,
+                          borderRadius: BorderRadius.circular(th.AppRadius.sm),
+                          border: Border.all(
+                            color: active ? th.AppColors.primary : th.AppColors.border,
+                            width: active ? 1.4 : 1,
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            if (active) ...[
+                              const Icon(Icons.check_rounded, size: 13, color: Colors.white),
+                              const SizedBox(width: 5),
+                            ],
+                            Flexible(
+                              child: Text(
+                                S(code).nativeName,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: 12.5,
+                                  fontWeight: active ? FontWeight.w800 : FontWeight.w600,
+                                  color: active ? Colors.white : th.AppColors.textSub,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                }).toList(),
+              );
+            },
+          ),
+        ],
       ),
     );
   }

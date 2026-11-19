@@ -434,6 +434,12 @@ const Map<String, String> _ja = {
   'birthdayKeepHint': '未入力の場合は現在の年齢を保持します',
   'birthdayCurrentAge': '現在 {n} 歳',
   'birthdayTapToChange': 'タップで生年月日を再設定',
+  'aboutDeviceSection': 'デバイス情報',
+  'bleName': 'BLE 名',
+  'productModel': '製品型番',
+  'firmwareModel': 'ファームウェア型番',
+  'vendorName': 'メーカー',
+  'creditsOpenAfu': 'プロトコル詳細の相互検証',
 };
 
 const Map<String, String> _zhHans = {
@@ -704,6 +710,12 @@ const Map<String, String> _zhHans = {
   'birthdayKeepHint': '留空则沿用当前年龄',
   'birthdayCurrentAge': '当前 {n} 岁',
   'birthdayTapToChange': '点击可重设出生日期',
+  'aboutDeviceSection': '设备信息',
+  'bleName': 'BLE 名称',
+  'productModel': '产品型号',
+  'firmwareModel': '固件型号',
+  'vendorName': '厂商',
+  'creditsOpenAfu': '协议细节交叉验证',
 };
 
 const Map<String, String> _zhHant = {
@@ -974,6 +986,12 @@ const Map<String, String> _zhHant = {
   'birthdayKeepHint': '留空則沿用目前年齡',
   'birthdayCurrentAge': '目前 {n} 歲',
   'birthdayTapToChange': '點擊可重設出生日期',
+  'aboutDeviceSection': '裝置資訊',
+  'bleName': 'BLE 名稱',
+  'productModel': '產品型號',
+  'firmwareModel': '韌體型號',
+  'vendorName': '廠商',
+  'creditsOpenAfu': '協議細節交叉驗證',
 };
 
 const Map<String, String> _de = {
@@ -1244,6 +1262,12 @@ const Map<String, String> _de = {
   'birthdayKeepHint': 'Leer lassen, um das aktuelle Alter zu behalten',
   'birthdayCurrentAge': 'Aktuell {n} Jahre',
   'birthdayTapToChange': 'Tippen, um das Geburtsdatum neu zu setzen',
+  'aboutDeviceSection': 'Geräteinfo',
+  'bleName': 'BLE-Name',
+  'productModel': 'Produktmodell',
+  'firmwareModel': 'Firmware-Modell',
+  'vendorName': 'Hersteller',
+  'creditsOpenAfu': 'Protokolldetails gegengeprüft',
 };
 
 const Map<String, String> _en = {
@@ -1514,6 +1538,12 @@ const Map<String, String> _en = {
   'birthdayKeepHint': 'Leave empty to keep the current age',
   'birthdayCurrentAge': 'Currently {n} years',
   'birthdayTapToChange': 'Tap to set date of birth',
+  'aboutDeviceSection': 'Device info',
+  'bleName': 'BLE name',
+  'productModel': 'Product model',
+  'firmwareModel': 'Firmware model',
+  'vendorName': 'Vendor',
+  'creditsOpenAfu': 'Protocol detail cross-validation',
 };
 
 
@@ -1600,6 +1630,12 @@ class S {
   String get copiedMac => _strings['copiedMac']!;
   String get credits => _strings['credits']!;
   String get calcModel => _strings['calcModel']!;
+  String get aboutDeviceSection => _strings['aboutDeviceSection']!;
+  String get bleName => _strings['bleName']!;
+  String get productModel => _strings['productModel']!;
+  String get firmwareModel => _strings['firmwareModel']!;
+  String get vendorName => _strings['vendorName']!;
+  String get creditsOpenAfu => _strings['creditsOpenAfu']!;
   String get calcModelValue => _strings['calcModelValue']!;
   String get calcModelHint => _strings['calcModelHint']!;
   String get creditsDesc => _strings['creditsDesc']!;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../core/models.dart';
+import '../core/app_version.dart';
 import '../core/units.dart';
 import '../data/store.dart';
 import '../data/debug_log.dart';
@@ -169,7 +170,7 @@ class _SettingsPageState extends State<SettingsPage> {
         if (_debugMode) _row(Icons.bug_report, s.debugLog, '', () => _logSheet(s)),
       ]),
       _group(s.about, [
-        _row(Icons.info_outline, s.about, 'v0.2.0', () => _aboutSheet(s)),
+        _row(Icons.info_outline, s.about, 'v' + kAppVersion, () => _aboutSheet(s)),
       ]),
       const SizedBox(height: 24),
       // 底部版权（固定文案，不随语言变化）
@@ -649,142 +650,259 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   void _aboutSheet(S s) {
-    const repos = <(String, String)>[
-      ('jovix0101/OpenAfu', '协议细节交叉验证'),
-    ];
     _sheet(s.about, [
-      // ── 品牌 + 版本（彩蛋：连点 7 次切换调试模式）──
-      GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: () async {
-          _versionTapCount++;
-          if (_versionTapCount < 7) return;
-          _versionTapCount = 0;
-          _debugMode = !_debugMode;
-          await setDebugMode(_debugMode);
-          if (!mounted) return;
-          setState(() {});
-          Navigator.pop(context);
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(_debugMode ? '调试模式已开启' : '调试模式已关闭'),
-              duration: const Duration(seconds: 2),
-            ),
-          );
-        },
-        child: Center(
-          child: Column(
+      _aboutHero(s),
+      const SizedBox(height: 24),
+      // ── 设备信息 ──
+      _aboutCard(
+        icon: Icons.bluetooth_rounded,
+        title: s.aboutDeviceSection,
+        children: [
+          _kv(s.bleName, 'AFU-WL-TZ-A1'),
+          _kv(s.productModel, 'FG2508WB'),
+          _kv(s.firmwareModel, 'FG2313UWB-D'),
+          _kv(s.vendorName, 'ICOMON / Welland', last: true),
+        ],
+      ),
+      const SizedBox(height: 14),
+      // ── 计算模型 ──
+      _aboutCard(
+        icon: Icons.functions_rounded,
+        title: s.calcModel,
+        children: [
+          Row(
             children: [
-              Container(
-                width: 58, height: 58,
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [Color(0xFF3FC0A4), Color(0xFF4EA8FF)],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: BorderRadius.circular(18),
-                  boxShadow: th.AppShadows.card,
+              Expanded(
+                child: Text(
+                  s.calcModelValue,
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: th.AppColors.text),
                 ),
-                alignment: Alignment.center,
-                child: const Icon(Icons.monitor_weight_rounded, color: Colors.white, size: 28),
               ),
-              const SizedBox(height: 10),
-              Text('AFU', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w900, color: th.AppColors.text, letterSpacing: 2)),
-              const SizedBox(height: 2),
-              Text('v0.2.0 · Flutter', style: TextStyle(fontSize: 11, color: th.AppColors.textHint, letterSpacing: 0.5)),
             ],
           ),
-        ),
+          const SizedBox(height: 10),
+          _warnNote(s.calcModelHint),
+        ],
       ),
-      const SizedBox(height: 22),
-      // ── 设备与仓库信息 ──
-      _aboutRow(s.adaptation, 'AFU-WL-TZ-A1'),
-      _aboutRow('ICOMON / Welland', 'FG2313UWB-D'),
-      _aboutRow(s.ghRepo, 'github.com/Linmord/afu-scale-app'),
-      _aboutRow(s.calcModel, s.calcModelValue),
-      const SizedBox(height: 12),
-      // ── 计算模型偏差说明 ──
-      Container(
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          color: th.AppColors.soft(th.AppColors.warnSoft, th.AppColors.warnSoftD),
-          borderRadius: BorderRadius.circular(th.AppRadius.sm),
-          border: Border.all(color: th.AppColors.soft(th.AppColors.warn.withValues(alpha: 0.25), th.AppColors.warn.withValues(alpha: 0.30))),
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Icon(Icons.info_outline_rounded, size: 14, color: th.AppColors.warn),
-            const SizedBox(width: 8),
-            Expanded(
-              child: Text(
-                s.calcModelHint,
-                style: TextStyle(fontSize: 11, height: 1.6, color: th.AppColors.textSub),
-              ),
-            ),
-          ],
-        ),
-      ),
-      const SizedBox(height: 22),
+      const SizedBox(height: 14),
       // ── 致谢 ──
-      _sectionLabel(s.credits),
-      const SizedBox(height: 12),
-      Text(
-        s.creditsDesc,
-        style: TextStyle(fontSize: 11.5, color: th.AppColors.textSub, height: 1.65),
+      _aboutCard(
+        icon: Icons.favorite_border_rounded,
+        title: s.credits,
+        children: [
+          Text(
+            s.creditsDesc,
+            style: TextStyle(fontSize: 11.5, color: th.AppColors.textSub, height: 1.65),
+          ),
+          const SizedBox(height: 12),
+          _repoRow('jovix0101/OpenAfu', s.creditsOpenAfu),
+          const SizedBox(height: 10),
+          Text(
+            s.creditsLicense,
+            style: TextStyle(fontSize: 10, color: th.AppColors.textHint, height: 1.5),
+          ),
+        ],
       ),
-      const SizedBox(height: 12),
-      ...repos.map((r) => Padding(
-            padding: const EdgeInsets.only(bottom: 9),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: 5, height: 5,
-                  margin: const EdgeInsets.only(top: 5, right: 9),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: th.AppColors.primary,
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        r.$1,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: 11.5,
-                          fontWeight: FontWeight.w700,
-                          color: th.AppColors.text,
-                        ),
-                      ),
-                      const SizedBox(height: 1),
-                      Text(
-                        r.$2,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(fontSize: 10, color: th.AppColors.textHint),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          )),
-      const SizedBox(height: 6),
+      const SizedBox(height: 20),
       Center(
         child: Text(
-          s.creditsLicense,
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 10, color: th.AppColors.textHint, height: 1.5),
+          '© 2026 Lingaiyue',
+          style: TextStyle(fontSize: 10, color: th.AppColors.textHint, letterSpacing: 0.3),
         ),
       ),
     ]);
   }
+
+  /// 关于页顶部品牌卡：图标 + 名称 + 版本（连点 7 次切换调试模式）。
+  Widget _aboutHero(S s) => GestureDetector(
+    behavior: HitTestBehavior.opaque,
+    onTap: () async {
+      _versionTapCount++;
+      if (_versionTapCount < 7) return;
+      _versionTapCount = 0;
+      _debugMode = !_debugMode;
+      await setDebugMode(_debugMode);
+      if (!mounted) return;
+      setState(() {});
+      Navigator.pop(context);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(_debugMode ? '调试模式已开启' : '调试模式已关闭'),
+          duration: const Duration(seconds: 2),
+        ),
+      );
+    },
+    child: Container(
+      padding: const EdgeInsets.symmetric(vertical: 22),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            th.AppColors.soft(th.AppColors.primarySoft, th.AppColors.primarySoftD),
+            th.AppColors.surface,
+          ],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+        borderRadius: BorderRadius.circular(th.AppRadius.lg),
+        border: Border.all(color: th.AppColors.border),
+      ),
+      child: Column(
+        children: [
+          Container(
+            width: 62, height: 62,
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [Color(0xFF3FC0A4), Color(0xFF4EA8FF)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: th.AppShadows.card,
+            ),
+            alignment: Alignment.center,
+            child: const Icon(Icons.monitor_weight_rounded, color: Colors.white, size: 30),
+          ),
+          const SizedBox(height: 12),
+          Text(
+            'AFU',
+            style: TextStyle(fontSize: 19, fontWeight: FontWeight.w900, color: th.AppColors.text, letterSpacing: 3),
+          ),
+          const SizedBox(height: 8),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+            decoration: BoxDecoration(
+              color: th.AppColors.surfaceAlt,
+              borderRadius: BorderRadius.circular(th.AppRadius.pill),
+              border: Border.all(color: th.AppColors.border),
+            ),
+            child: Text(
+              'v' + kAppVersion + ' · Flutter',
+              style: TextStyle(fontSize: 10.5, color: th.AppColors.textSub, letterSpacing: 0.4),
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+
+  /// 关于页分组卡：小标题 + 圆角内容卡。
+  Widget _aboutCard({required IconData icon, required String title, required List<Widget> children}) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Padding(
+        padding: const EdgeInsets.only(left: 4, bottom: 8),
+        child: Row(
+          children: [
+            Icon(icon, size: 13, color: th.AppColors.primary),
+            const SizedBox(width: 6),
+            Text(
+              title,
+              style: TextStyle(fontSize: 11, fontWeight: FontWeight.w800, color: th.AppColors.textSub, letterSpacing: 0.5),
+            ),
+          ],
+        ),
+      ),
+      Container(
+        padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
+        decoration: BoxDecoration(
+          color: th.AppColors.surface,
+          borderRadius: BorderRadius.circular(th.AppRadius.md),
+          border: Border.all(color: th.AppColors.border),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: children,
+        ),
+      ),
+    ],
+  );
+
+  /// 标签-值行（带分隔线）。
+  Widget _kv(String label, String value, {bool last = false}) => Container(
+    padding: const EdgeInsets.symmetric(vertical: 9),
+    decoration: last ? null : BoxDecoration(
+      border: Border(bottom: BorderSide(color: th.AppColors.border, width: 0.6)),
+    ),
+    child: Row(
+      children: [
+        Expanded(
+          flex: 4,
+          child: Text(
+            label,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontSize: 11.5, color: th.AppColors.textHint),
+          ),
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          flex: 6,
+          child: Text(
+            value,
+            textAlign: TextAlign.right,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.w700, color: th.AppColors.textSub, height: 1.3),
+          ),
+        ),
+      ],
+    ),
+  );
+
+  /// 橙色提示条。
+  Widget _warnNote(String text) => Container(
+    padding: const EdgeInsets.all(11),
+    decoration: BoxDecoration(
+      color: th.AppColors.soft(th.AppColors.warnSoft, th.AppColors.warnSoftD),
+      borderRadius: BorderRadius.circular(th.AppRadius.sm),
+      border: Border.all(color: th.AppColors.soft(th.AppColors.warn.withValues(alpha: 0.25), th.AppColors.warn.withValues(alpha: 0.30))),
+    ),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Icon(Icons.info_outline_rounded, size: 13, color: th.AppColors.warn),
+        const SizedBox(width: 8),
+        Expanded(
+          child: Text(
+            text,
+            style: TextStyle(fontSize: 10.5, height: 1.6, color: th.AppColors.textSub),
+          ),
+        ),
+      ],
+    ),
+  );
+
+  /// 致谢条目：小圆点 + 名称 + 说明。
+  Widget _repoRow(String name, String desc) => Row(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Container(
+        width: 5, height: 5,
+        margin: const EdgeInsets.only(top: 5, right: 9),
+        decoration: BoxDecoration(shape: BoxShape.circle, color: th.AppColors.primary),
+      ),
+      Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              name,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.w700, color: th.AppColors.text),
+            ),
+            const SizedBox(height: 1),
+            Text(
+              desc,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(fontSize: 10, color: th.AppColors.textHint),
+            ),
+          ],
+        ),
+      ),
+    ],
+  );
 
   /// 关于页的信息行：左灰标签 + 右值，两端对齐。
   Widget _aboutRow(String label, String value) => Padding(
