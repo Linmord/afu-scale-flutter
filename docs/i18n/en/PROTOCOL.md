@@ -614,14 +614,10 @@ and check whether it receives data normally. If nRF cannot do it either, the pro
 ## 11. Reference material
 
 This protocol was not guessed out of thin air; it mainly draws on these public reverse-engineering results:
-
+This protocol was not guessed from thin air; it was cross-validated against the following public reverse-engineering work:
 | Project | Language / platform | Contribution |
 | --- | --- | --- |
-| [Fatpandac/AFUScale](https://github.com/Fatpandac/AFUScale) | iOS / Swift | the earliest protocol reverse engineering, the basis of the command sequence |
-| [Mzdyl/ant-afu-welland-scale](https://github.com/Mzdyl/ant-afu-welland-scale) | Python | frame format and weight encoding |
-| [monkey-wenjun/vitaloop-app](https://github.com/monkey-wenjun/vitaloop-app) | Android / Kotlin | single-handshake mode, usage of `deviceType` |
-| [Xuan-lprk/WeighTrace](https://github.com/Xuan-lprk/WeighTrace) | documentation | advertising ServiceData layout, scan strategy |
-| [ZeroOneCN/AntAF](https://github.com/ZeroOneCN/AntAF) | documentation | the 32-bit weight encoding, profile packet heartbeat |
+| [jovix0101/OpenAfu](https://github.com/jovix0101/OpenAfu) | Swift / Documentation | protocol detail cross-validation: checksum low 5 bits, history ACK, unit bits, impedance switch |
 
 We also used HCI captures from this machine (`ant_cleanup.log`, `unbind_official.log`) as evidence for where the `02` command comes from.
 

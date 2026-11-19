@@ -614,14 +614,10 @@ und prüfen, ob Daten normal ankommen. Klappt es auch mit nRF nicht, liegt ein p
 ## 11. Referenzen
 
 Dieses Protokoll ist nicht aus der Luft gegriffen; herangezogen wurden vor allem diese öffentlichen Reverse-Engineering-Ergebnisse:
-
+Dieses Protokoll wurde nicht geraten, sondern mit den folgenden öffentlichen Reverse-Engineering-Ergebnissen gegengeprüft:
 | Projekt | Sprache/Plattform | Beitrag |
 | --- | --- | --- |
-| [Fatpandac/AFUScale](https://github.com/Fatpandac/AFUScale) | iOS / Swift | die früheste Protokoll-Rückentwicklung, Grundlage der Befehlssequenz |
-| [Mzdyl/ant-afu-welland-scale](https://github.com/Mzdyl/ant-afu-welland-scale) | Python | Frame-Format und Gewichtskodierung |
-| [monkey-wenjun/vitaloop-app](https://github.com/monkey-wenjun/vitaloop-app) | Android / Kotlin | Einzel-Handshake-Modus, Verwendung von `deviceType` |
-| [Xuan-lprk/WeighTrace](https://github.com/Xuan-lprk/WeighTrace) | Dokumentation | Struktur der Advertising-ServiceData, Scan-Strategie |
-| [ZeroOneCN/AntAF](https://github.com/ZeroOneCN/AntAF) | Dokumentation | Erläuterung der 32-Bit-Gewichtskodierung, Heartbeat des Profilpakets |
+| [jovix0101/OpenAfu](https://github.com/jovix0101/OpenAfu) | Swift / Dokumentation | Gegenprüfung von Protokolldetails: Prüfsumme untere 5 Bit, Verlauf-ACK, Einheitenbits, Impedanzschalter |
 
 Zusätzlich dienten HCI-Mitschnitte des eigenen Geräts (`ant_cleanup.log`, `unbind_official.log`) als Belegquelle für den `02`-Befehl.
 

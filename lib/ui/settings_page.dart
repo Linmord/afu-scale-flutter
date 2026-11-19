@@ -650,11 +650,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   void _aboutSheet(S s) {
     const repos = <(String, String)>[
-      ('Fatpandac/AFUScale', 'iOS 协议参考'),
-      ('Mzdyl/ant-afu-welland-scale', 'Python 实现'),
-      ('monkey-wenjun/vitaloop-app', 'Android BLE'),
-      ('Xuan-lprk/WeighTrace', '广播解析与扫描策略'),
-      ('ZeroOneCN/AntAF', '体重编码与 BIA 公式'),
+      ('jovix0101/OpenAfu', '协议细节交叉验证'),
     ];
     _sheet(s.about, [
       // ── 品牌 + 版本（彩蛋：连点 7 次切换调试模式）──

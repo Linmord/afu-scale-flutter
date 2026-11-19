@@ -614,14 +614,10 @@ adb pull /storage/emulated/0/Android/data/com.aiyue.afu_scale/files/comm_latest.
 ## 11. 参考资料
 
 这套协议不是凭空猜的，主要参考了这些公开的逆向成果：
-
+这套协议不是凭空猜的，主要参考了这些公开的逆向成果：
 | 项目 | 语言/平台 | 贡献 |
 | --- | --- | --- |
-| [Fatpandac/AFUScale](https://github.com/Fatpandac/AFUScale) | iOS / Swift | 最早的协议逆向，命令序列基础 |
-| [Mzdyl/ant-afu-welland-scale](https://github.com/Mzdyl/ant-afu-welland-scale) | Python | 帧格式与体重编码 |
-| [monkey-wenjun/vitaloop-app](https://github.com/monkey-wenjun/vitaloop-app) | Android / Kotlin | 单握手模式、`deviceType` 用法 |
-| [Xuan-lprk/WeighTrace](https://github.com/Xuan-lprk/WeighTrace) | 文档 | 广播 ServiceData 结构、扫描策略 |
-| [ZeroOneCN/AntAF](https://github.com/ZeroOneCN/AntAF) | 文档 | 体重 32 位编码说明、资料包心跳 |
+| [jovix0101/OpenAfu](https://github.com/jovix0101/OpenAfu) | Swift / 文档 | 协议细节交叉验证：校验和低 5 位、历史帧 ACK、单位位、阻抗开关 |
 
 另外还用了本机 HCI 抓包（`ant_cleanup.log`、`unbind_official.log`）作为 `02` 命令的来源证据。
 

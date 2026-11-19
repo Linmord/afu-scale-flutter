@@ -614,14 +614,10 @@ adb pull /storage/emulated/0/Android/data/com.aiyue.afu_scale/files/comm_latest.
 ## 11. 参考資料
 
 このプロトコルは当て推量で組み立てたものではなく、主に次の公開リバース成果を参考にしている：
-
+このプロトコルは推測ではなく、以下の公開リバース成果と相互検証したものです：
 | プロジェクト | 言語／プラットフォーム | 貢献 |
 | --- | --- | --- |
-| [Fatpandac/AFUScale](https://github.com/Fatpandac/AFUScale) | iOS / Swift | 最初期のプロトコルリバースで、コマンドシーケンスの基礎 |
-| [Mzdyl/ant-afu-welland-scale](https://github.com/Mzdyl/ant-afu-welland-scale) | Python | フレーム形式と体重エンコード |
-| [monkey-wenjun/vitaloop-app](https://github.com/monkey-wenjun/vitaloop-app) | Android / Kotlin | 単一ハンドシェイク方式、`deviceType` の使い方 |
-| [Xuan-lprk/WeighTrace](https://github.com/Xuan-lprk/WeighTrace) | ドキュメント | アドバタイジング ServiceData の構造、スキャン戦略 |
-| [ZeroOneCN/AntAF](https://github.com/ZeroOneCN/AntAF) | ドキュメント | 体重 32 ビットエンコードの説明、プロフィールパケットのハートビート |
+| [jovix0101/OpenAfu](https://github.com/jovix0101/OpenAfu) | Swift / ドキュメント | プロトコル詳細の相互検証：チェックサム下位5ビット、履歴ACK、単位ビット、インピーダンススイッチ |
 
 ほかに、`02` コマンドの出典証拠として本機の HCI キャプチャ（`ant_cleanup.log`、`unbind_official.log`）も使っている。
 

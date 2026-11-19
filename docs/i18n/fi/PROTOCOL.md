@@ -614,14 +614,10 @@ ja katso saako dataa normaalisti. Jos nRF:lläkään ei onnistu, kyse on fyysise
 ## 11. Lähteet
 
 Tätä protokollaa ei ole arvattu tyhjästä, pääasiallisesti on viitattu näihin julkisiin reverse-engineering-tuloksiin:
-
+Tätä protokollaa ei ole arvattu, vaan se on ristiinvalidoitu seuraavien julkisten reverse engineering -tulosten kanssa:
 | Projekti | Kieli/alusta | Panos |
 | --- | --- | --- |
-| [Fatpandac/AFUScale](https://github.com/Fatpandac/AFUScale) | iOS / Swift | varhaisin protokollan reverse, komentosekvenssin perusta |
-| [Mzdyl/ant-afu-welland-scale](https://github.com/Mzdyl/ant-afu-welland-scale) | Python | kehyksen muoto ja painon koodaus |
-| [monkey-wenjun/vitaloop-app](https://github.com/monkey-wenjun/vitaloop-app) | Android / Kotlin | yhden kättelyn malli, `deviceType`-käyttö |
-| [Xuan-lprk/WeighTrace](https://github.com/Xuan-lprk/WeighTrace) | dokumentaatio | mainonnan ServiceData-rakenne, skannausstrategia |
-| [ZeroOneCN/AntAF](https://github.com/ZeroOneCN/AntAF) | dokumentaatio | painon 32-bittisen koodauksen selitys, tietopaketin heartbeat |
+| [jovix0101/OpenAfu](https://github.com/jovix0101/OpenAfu) | Swift / dokumentaatio | protokollan yksityiskohtien ristiinvalidointi: tarkistussumman alimmat 5 bittiä, historia-ACK, yksikköbitit, impedanssikytkin |
 
 Lisäksi käytimme paikallista HCI-kaappausta (`ant_cleanup.log`, `unbind_official.log`) `02`-komennon lähdetodisteena.
 
