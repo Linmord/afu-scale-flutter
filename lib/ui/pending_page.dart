@@ -18,12 +18,14 @@ class _PendingPageState extends State<PendingPage> {
   List<PendingHistory> _items = [];
   final Set<String> _sel = {};
   DisplayUnit _unit = DisplayUnit.kg;
+  String _bfAlgo = 'officialAnt';
 
   @override void initState() { super.initState(); _load(); }
 
   Future<void> _load() async {
     _items = await getPending();
     _unit = await getDisplayUnit();
+    _bfAlgo = await getBfAlgo();
     if (mounted) setState(() {});
   }
 
@@ -71,6 +73,7 @@ class _PendingPageState extends State<PendingPage> {
             age: widget.active.age,
             sex: widget.active.sex,
             impedances: [it.impedance1 ?? 0, it.impedance2 ?? 0],
+            algo: _bfAlgo,
           )?.bodyFatPercent
         : null;
     return GestureDetector(
@@ -281,6 +284,7 @@ class _PendingPageState extends State<PendingPage> {
               age: p.age,
               sex: p.sex,
               impedances: [it.impedance1 ?? 0, it.impedance2 ?? 0],
+              algo: _bfAlgo,
             )
           : null;
       await appendRecord(MeasurementRecord(

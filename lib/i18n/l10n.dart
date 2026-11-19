@@ -425,6 +425,11 @@ const Map<String, String> _ja = {
   'myScale': '体重計',
   'searchingNearby': '近くの AFU 体重計を検索中…',
   'noDeviceFound': 'デバイスが見つかりません。体重計を軽く踏んで起こしてから再試行してください',
+  'bfAlgoSection': '体脂肪率の計算方式',
+  'bfAlgoHint': '体成分の計算に使うアルゴリズムを選びます。切り替えると過去の記録も新しい方式で再計算されます。',
+  'algoOfficial': '公式準拠',
+  'algoDeurenberg': 'Deurenberg式',
+  'algoSegal': 'Segal式',
 };
 
 const Map<String, String> _zhHans = {
@@ -686,6 +691,11 @@ const Map<String, String> _zhHans = {
   'myScale': '体脂秤',
   'searchingNearby': '正在搜索附近的 AFU 体脂秤…',
   'noDeviceFound': '未发现设备，可轻踩唤醒体脂秤后重试',
+  'bfAlgoSection': '体脂率算法',
+  'bfAlgoHint': '选择体成分的计算公式。切换后会按新算法重算全部历史记录。',
+  'algoOfficial': '官方对齐',
+  'algoDeurenberg': 'Deurenberg式',
+  'algoSegal': 'Segal式',
 };
 
 const Map<String, String> _zhHant = {
@@ -947,6 +957,11 @@ const Map<String, String> _zhHant = {
   'myScale': '體脂秤',
   'searchingNearby': '正在搜尋附近的 AFU 體脂秤…',
   'noDeviceFound': '未發現裝置，可輕踩喚醒體脂秤後重試',
+  'bfAlgoSection': '體脂率演算法',
+  'bfAlgoHint': '選擇體成分的計算公式。切換後會按新演算法重算全部歷史記錄。',
+  'algoOfficial': '官方對齊',
+  'algoDeurenberg': 'Deurenberg式',
+  'algoSegal': 'Segal式',
 };
 
 const Map<String, String> _de = {
@@ -1208,6 +1223,11 @@ const Map<String, String> _de = {
   'myScale': 'Waage',
   'searchingNearby': 'Suche AFU-Waagen in der Nähe…',
   'noDeviceFound': 'Kein Gerät gefunden – Waage kurz antippen und erneut suchen',
+  'bfAlgoSection': 'Körperfett-Formel',
+  'bfAlgoHint': 'Wähle die Formel für die Körperanalyse. Beim Wechsel werden alle bisherigen Messungen neu berechnet.',
+  'algoOfficial': 'App-konform',
+  'algoDeurenberg': 'Deurenberg',
+  'algoSegal': 'Segal',
 };
 
 const Map<String, String> _en = {
@@ -1469,6 +1489,11 @@ const Map<String, String> _en = {
   'myScale': 'Scale',
   'searchingNearby': 'Searching nearby AFU scales…',
   'noDeviceFound': 'No device found — tap the scale to wake it and retry',
+  'bfAlgoSection': 'Body Fat Formula',
+  'bfAlgoHint': 'Choose the formula used for body composition. Switching recalculates all past records with the new formula.',
+  'algoOfficial': 'Official',
+  'algoDeurenberg': 'Deurenberg',
+  'algoSegal': 'Segal',
 };
 
 
@@ -1766,6 +1791,12 @@ class S {
   String get myScale => _strings['myScale']!;
   String get searchingNearby => _strings['searchingNearby']!;
   String get noDeviceFound => _strings['noDeviceFound']!;
+
+  String get bfAlgoSection => _strings['bfAlgoSection']!;
+  String get bfAlgoHint => _strings['bfAlgoHint']!;
+  String get algoOfficial => _strings['algoOfficial']!;
+  String get algoDeurenberg => _strings['algoDeurenberg']!;
+  String get algoSegal => _strings['algoSegal']!;
 
   /// 带 {n} 占位符的文案：`historySynced`。
   String historySynced(int n) =>

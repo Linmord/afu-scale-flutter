@@ -12,6 +12,7 @@ class StoreKeys {
   static const themeMode = 'afu_theme_mode';
   static const preferredDevice = 'afu_preferred_device';
   static const incompletePolicy = 'afu_incomplete_policy';
+  static const bfAlgo = 'afu_bf_algo';
   static const customRanges = 'afu_custom_ranges';
   static const debugMode = 'afu_debug_mode';
   static const autoAssignHistory = 'afu_auto_assign_history';
@@ -171,6 +172,7 @@ Future<int> recalcRecordsForProfile(UserProfile p) async {
       age: p.age,
       sex: p.sex,
       impedances: [r.impedance1 ?? 0, r.impedance2 ?? 0],
+      algo: await getBfAlgo(),
     );
     if (comp == null) continue;
     r.bodyComposition = comp;
@@ -380,6 +382,17 @@ Future<void> setPreferredDeviceId(String id) async {
 /// - ask   每次询问用户（默认，第一次会问并可选择记住）
 /// - save  总是只保存体重
 /// - skip  总是不保存
+/// 体脂率算法选择：officialAnt（默认，对齐官方 App）/ paperDeurenberg / paperSegal。
+Future<String> getBfAlgo() async {
+  final prefs = await SharedPreferences.getInstance();
+  return prefs.getString(StoreKeys.bfAlgo) ?? 'officialAnt';
+}
+
+Future<void> setBfAlgo(String algo) async {
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.setString(StoreKeys.bfAlgo, algo);
+}
+
 Future<String> getIncompletePolicy() async {
   final prefs = await SharedPreferences.getInstance();
   return prefs.getString(StoreKeys.incompletePolicy) ?? 'ask';

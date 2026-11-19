@@ -39,7 +39,8 @@ class _SettingsPageState extends State<SettingsPage> {
   String? _status;
   String _incompletePolicy = 'ask';
   bool _debugMode = false;
-  int _versionTapCount = 0; // 关于页连点版本号的计数（彩蛋）
+  int _versionTapCount = 0;
+  String _bfAlgo = 'officialAnt'; // 关于页连点版本号的计数（彩蛋）
 
   @override
   void initState() {
@@ -74,6 +75,7 @@ class _SettingsPageState extends State<SettingsPage> {
     _syncUrl = await getSyncUrl();
     _pendingCount = (await getPending()).length;
     _incompletePolicy = await getIncompletePolicy();
+    _bfAlgo = await getBfAlgo();
     _debugMode = await getDebugMode();
     if (mounted) setState(() {});
   }
@@ -120,6 +122,27 @@ class _SettingsPageState extends State<SettingsPage> {
           () => _goalSheet(s),
         ),
       ),
+      ]),
+      _group(s.bfAlgoSection, [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(14, 12, 14, 4),
+          child: Text(
+            s.bfAlgoHint,
+            style: TextStyle(color: th.AppColors.textHint, fontSize: 11, height: 1.5),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+          child: Row(
+            children: [
+              _algoTab(s.algoOfficial, 'officialAnt'),
+              const SizedBox(width: 6),
+              _algoTab(s.algoDeurenberg, 'paperDeurenberg'),
+              const SizedBox(width: 6),
+              _algoTab(s.algoSegal, 'paperSegal'),
+            ],
+          ),
+        ),
       ]),
       _group(s.incompleteSection, [
         Padding(
@@ -185,6 +208,50 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   /// 单位选择：只用「符号 + 数字换算」两行，避免任何语言下文字过长溢出。
+  /// 体脂算法切换芯片。切换后：设置重读 + 全部记录重算（store.recalc）。
+  Widget _algoTab(String label, String value) {
+    final active = _bfAlgo == value;
+    return Expanded(
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () async {
+          if (active) return;
+          await setBfAlgo(value);
+          setState(() { _bfAlgo = value; });
+          // 用新算法重算所有成员的历史体成分
+          final profiles = await getProfiles();
+          for (final p in profiles) {
+            await recalcRecordsForProfile(p);
+          }
+          widget.onChanged();
+          if (!mounted) return;
+          setState(() {});
+        },
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 180),
+          padding: const EdgeInsets.symmetric(vertical: 9),
+          decoration: BoxDecoration(
+            color: active ? th.AppColors.soft(th.AppColors.primarySoft, th.AppColors.primarySoftD) : th.AppColors.surfaceAlt,
+            borderRadius: BorderRadius.circular(th.AppRadius.sm),
+            border: Border.all(color: active ? th.AppColors.primary : th.AppColors.border),
+          ),
+          alignment: Alignment.center,
+          child: Text(
+            label,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 11,
+              fontWeight: active ? FontWeight.w800 : FontWeight.w500,
+              color: active ? th.AppColors.soft(th.AppColors.primaryDeep, th.AppColors.primary) : th.AppColors.textSub,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _policyTab(String label, String value) {
     final active = _incompletePolicy == value;
     return Expanded(

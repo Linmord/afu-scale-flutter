@@ -31,6 +31,7 @@ class _DataPageState extends State<DataPage> with SingleTickerProviderStateMixin
   double? _goalKg;
   bool _expanded = false;
   String? _detail;
+  String _bfAlgo = 'officialAnt'; // 体脂算法（设置页可切）
   // 可选指标：默认显示 4 个，用户在芯片里切换
   final Set<String> _shown = {'fat', 'muscle', 'water', 'skeletal'};
   String _trendMetric = 'weight'; // weight | fat | muscle | water
@@ -66,10 +67,12 @@ class _DataPageState extends State<DataPage> with SingleTickerProviderStateMixin
   Future<void> _loadPrefs() async {
     final u = await getDisplayUnit();
     final g = await getGoal();
+    final a = await getBfAlgo();
     if (mounted) {
       setState(() {
         _unit = u;
         _goalKg = (g != null && g.enabled) ? g.weightKg : null;
+        _bfAlgo = a;
       });
     }
   }
@@ -120,6 +123,7 @@ class _DataPageState extends State<DataPage> with SingleTickerProviderStateMixin
     return BodyCompositionCalc.estimate(
       weightKg: r.weightKg, heightCm: pr.heightCm, age: pr.age, sex: pr.sex,
       impedances: [r.impedance1 ?? 0, r.impedance2 ?? 0],
+      algo: _bfAlgo,
     );
   }
 
