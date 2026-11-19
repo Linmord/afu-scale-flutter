@@ -3,6 +3,7 @@ import '../core/models.dart';
 import '../data/store.dart';
 import 'package:afu_scale/i18n/l10n.dart';
 import 'theme.dart' as th;
+import 'widgets/birthday_field.dart';
 import 'device_scanner_page.dart';
 
 /// 首次安装引导页（两步）：1. 创建成员资料 → 2. 搜索并绑定体脂秤 → 进入数据主页。
@@ -16,19 +17,19 @@ class _OnboardingPageState extends State<OnboardingPage> {
   int _step = 0;
   final _name = TextEditingController();
   String _sex = 'female';
-  final _birthday = TextEditingController(); // 输入生日，保存时换算成年龄
+  String _birthday = ''; // 生日（yyyy-MM-dd），由选择器写入
   final _height = TextEditingController(text: '163');
   final _weight = TextEditingController(text: '55.75');
   bool _saving = false;
 
   @override
   void dispose() {
-    _name.dispose(); _birthday.dispose(); _height.dispose(); _weight.dispose();
+    _name.dispose(); _height.dispose(); _weight.dispose();
     super.dispose();
   }
 
   bool get _valid => _name.text.trim().isNotEmpty
-      && (UserProfile.ageFromBirthday(_birthday.text) ?? 0) > 0
+      && (UserProfile.ageFromBirthday(_birthday) ?? 0) > 0
       && (double.tryParse(_height.text) ?? 0) > 50;
 
   Future<void> _saveProfileAndNext() async {
@@ -37,7 +38,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
     final profile = UserProfile(
       name: _name.text.trim(),
       sex: _sex,
-      age: UserProfile.ageFromBirthday(_birthday.text) ?? 24,
+      age: UserProfile.ageFromBirthday(_birthday) ?? 24,
       heightCm: double.tryParse(_height.text) ?? 163,
       weightKg: double.tryParse(_weight.text),
     );
@@ -164,15 +165,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
           ],
         ),
         _label(s.birthdayLabel),
-        _field(_birthday, '1995-01-01', false, 10),
-        Builder(builder: (_) {
-          final a = UserProfile.ageFromBirthday(_birthday.text);
-          final t = a == null ? '' : S.of(context).ageAutoCalc(a);
-          return Padding(
-            padding: const EdgeInsets.only(top: 6),
-            child: Text(t, style: TextStyle(fontSize: 11, color: th.AppColors.textHint)),
-          );
-        }),
+        BirthdayField(
+          onChanged: (v) => setState(() => _birthday = v),
+        ),
         _label(s.heightLabel),
         _field(_height, '163', true, 6),
         _label(s.weightLabel + ' ' + s.optional),

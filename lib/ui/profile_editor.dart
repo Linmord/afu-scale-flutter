@@ -4,6 +4,7 @@ import '../data/store.dart';
 import 'package:afu_scale/i18n/l10n.dart';
 import 'theme.dart' as th;
 import 'widgets/app_sheet.dart';
+import 'widgets/birthday_field.dart';
 
 /// 成员新增/编辑全屏表单页（避免底部弹窗被输入法遮挡）。返回 true 表示已保存。
 Future<bool> showProfileEditor(BuildContext ctx, {UserProfile? existing}) async {
@@ -24,7 +25,7 @@ class _ProfileEditorPage extends StatefulWidget {
 
 class _ProfileEditorPageState extends State<_ProfileEditorPage> {
   late final TextEditingController _name;
-  late final TextEditingController _birthday;
+  String _birthday = ''; // 由选择器写入；空=沿用原年龄
   late final TextEditingController _height;
   late final TextEditingController _weight;
   late String _sex;
@@ -35,7 +36,6 @@ class _ProfileEditorPageState extends State<_ProfileEditorPage> {
     super.initState();
     final e = widget.existing;
     _name = TextEditingController(text: e?.name ?? '');
-    _birthday = TextEditingController(); // 不回填：模型不存生日，留空=沿用原年龄
     _height = TextEditingController(text: (e?.heightCm ?? 163).toString());
     _weight = TextEditingController(text: e?.weightKg?.toString() ?? '');
     _sex = e?.sex ?? 'female';
@@ -43,19 +43,14 @@ class _ProfileEditorPageState extends State<_ProfileEditorPage> {
 
   @override
   void dispose() {
-    _name.dispose(); _birthday.dispose(); _height.dispose(); _weight.dispose();
+    _name.dispose(); _height.dispose(); _weight.dispose();
     super.dispose();
   }
 
-  String? agePreviewOf(BuildContext context) {
-    final a = _effectiveAge;
-    if (a == null || a <= 0) return null;
-    return S.of(context).ageAutoCalc(a);
-  }
 
   /// 生效年龄：填了生日用换算值，留空沿用原年龄（编辑时），新增留空则无效。
   int? get _effectiveAge =>
-      UserProfile.ageFromBirthday(_birthday.text) ?? widget.existing?.age;
+      UserProfile.ageFromBirthday(_birthday) ?? widget.existing?.age;
 
   bool get _valid => _name.text.trim().isNotEmpty
       && (_effectiveAge ?? 0) > 0
@@ -119,16 +114,17 @@ class _ProfileEditorPageState extends State<_ProfileEditorPage> {
             Expanded(child: _sexBtn(s.sexFemale, 'female')),
           ]),
           _label(s.birthdayLabel),
-          TextField(
-            controller: _birthday,
-            keyboardType: TextInputType.datetime,
-            onChanged: (_) => setState(() {}),
-            style: TextStyle(color: th.AppColors.text),
-            decoration: InputDecoration(
-              hintText: widget.existing != null ? s.birthdayKeepHint : s.birthdayHint,
-              helperText: agePreviewOf(context),
-            ),
+          BirthdayField(
+            onChanged: (v) => setState(() => _birthday = v),
           ),
+          if (widget.existing != null && _birthday.isEmpty)
+            Padding(
+              padding: const EdgeInsets.only(top: 6, left: 2),
+              child: Text(
+                s.birthdayKeepHint + ' · ' + s.ageAutoCalc(widget.existing!.age),
+                style: TextStyle(fontSize: 11.5, color: th.AppColors.textHint),
+              ),
+            ),
           _label(s.heightLabel),
           TextField(
             controller: _height,

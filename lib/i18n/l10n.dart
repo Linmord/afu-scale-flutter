@@ -429,7 +429,7 @@ const Map<String, String> _ja = {
   'calcModelValue': '公式非公開・独自推計',
   'calcModelHint': '体脂肪率などの身体組成は、本アプリ独自の推定式で計算しています。公式アプリの算出方法は非公開のため、表示値が公式と異なる場合があります（通常は数ポイント以内）。体重とBMIは実測値どおりです。',
   'birthdayLabel': '生年月日',
-  'birthdayHint': '1995-01-01 の形式で入力',
+  'birthdayHint': 'タップして生年月日を選択',
   'ageAutoCalc': '年齢は自動計算：{n} 歳',
   'birthdayKeepHint': '未入力の場合は現在の年齢を保持します',
 };
@@ -697,7 +697,7 @@ const Map<String, String> _zhHans = {
   'calcModelValue': '自研公式 · 与官方不同',
   'calcModelHint': '体脂率等身体成分由本 App 的独立估算公式计算。官方算法的具体实现未公开，因此显示数值可能与官方 App 存在差异（通常在几个百分点内）。体重与 BMI 为实测值，不受影响。',
   'birthdayLabel': '出生日期',
-  'birthdayHint': '格式 1995-01-01',
+  'birthdayHint': '点击选择出生日期',
   'ageAutoCalc': '自动换算年龄：{n} 岁',
   'birthdayKeepHint': '留空则沿用当前年龄',
 };
@@ -965,7 +965,7 @@ const Map<String, String> _zhHant = {
   'calcModelValue': '自研公式 · 與官方不同',
   'calcModelHint': '體脂率等身體成分由本 App 的獨立估算公式計算。官方演算法的具體實作未公開，因此顯示數值可能與官方 App 存在差異（通常在幾個百分點內）。體重與 BMI 為實測值，不受影響。',
   'birthdayLabel': '出生日期',
-  'birthdayHint': '格式 1995-01-01',
+  'birthdayHint': '點擊選擇出生日期',
   'ageAutoCalc': '自動換算年齡：{n} 歲',
   'birthdayKeepHint': '留空則沿用目前年齡',
 };
@@ -1233,7 +1233,7 @@ const Map<String, String> _de = {
   'calcModelValue': 'Eigene Formel, abweichend',
   'calcModelHint': 'Körperzusammensetzung wie Körperfett wird mit einer eigenen Schätzformel dieser App berechnet. Die offizielle App veröffentlicht ihren Algorithmus nicht, daher können die Werte von der offiziellen App abweichen (meist wenige Prozentpunkte). Gewicht und BMI sind Messwerte und nicht betroffen.',
   'birthdayLabel': 'Geburtsdatum',
-  'birthdayHint': 'Format 1995-01-01',
+  'birthdayHint': 'Tippen, um das Geburtsdatum zu wählen',
   'ageAutoCalc': 'Alter automatisch berechnet: {n} Jahre',
   'birthdayKeepHint': 'Leer lassen, um das aktuelle Alter zu behalten',
 };
@@ -1501,7 +1501,7 @@ const Map<String, String> _en = {
   'calcModelValue': 'Custom formula, not official',
   'calcModelHint': 'Body composition such as body fat is estimated with this app\'s own formula. The official app does not disclose its algorithm, so values may differ from the official app (usually within a few percentage points). Weight and BMI are measured values and are unaffected.',
   'birthdayLabel': 'Date of birth',
-  'birthdayHint': 'Format 1995-01-01',
+  'birthdayHint': 'Tap to choose date of birth',
   'ageAutoCalc': 'Age calculated automatically: {n}',
   'birthdayKeepHint': 'Leave empty to keep the current age',
 };
