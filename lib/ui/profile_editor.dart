@@ -24,7 +24,7 @@ class _ProfileEditorPage extends StatefulWidget {
 
 class _ProfileEditorPageState extends State<_ProfileEditorPage> {
   late final TextEditingController _name;
-  late final TextEditingController _age;
+  late final TextEditingController _birthday;
   late final TextEditingController _height;
   late final TextEditingController _weight;
   late String _sex;
@@ -35,7 +35,7 @@ class _ProfileEditorPageState extends State<_ProfileEditorPage> {
     super.initState();
     final e = widget.existing;
     _name = TextEditingController(text: e?.name ?? '');
-    _age = TextEditingController(text: (e?.age ?? 24).toString());
+    _birthday = TextEditingController(); // 不回填：模型不存生日，留空=沿用原年龄
     _height = TextEditingController(text: (e?.heightCm ?? 163).toString());
     _weight = TextEditingController(text: e?.weightKg?.toString() ?? '');
     _sex = e?.sex ?? 'female';
@@ -43,12 +43,22 @@ class _ProfileEditorPageState extends State<_ProfileEditorPage> {
 
   @override
   void dispose() {
-    _name.dispose(); _age.dispose(); _height.dispose(); _weight.dispose();
+    _name.dispose(); _birthday.dispose(); _height.dispose(); _weight.dispose();
     super.dispose();
   }
 
+  String? agePreviewOf(BuildContext context) {
+    final a = _effectiveAge;
+    if (a == null || a <= 0) return null;
+    return S.of(context).ageAutoCalc(a);
+  }
+
+  /// 生效年龄：填了生日用换算值，留空沿用原年龄（编辑时），新增留空则无效。
+  int? get _effectiveAge =>
+      UserProfile.ageFromBirthday(_birthday.text) ?? widget.existing?.age;
+
   bool get _valid => _name.text.trim().isNotEmpty
-      && (int.tryParse(_age.text) ?? 0) > 0
+      && (_effectiveAge ?? 0) > 0
       && (double.tryParse(_height.text) ?? 0) > 50;
 
   Future<void> _save() async {
@@ -57,7 +67,7 @@ class _ProfileEditorPageState extends State<_ProfileEditorPage> {
     final profile = UserProfile(
       name: _name.text.trim(),
       sex: _sex,
-      age: int.tryParse(_age.text) ?? 24,
+      age: _effectiveAge ?? 24,
       heightCm: double.tryParse(_height.text) ?? 163,
       weightKg: double.tryParse(_weight.text),
     );
@@ -108,12 +118,16 @@ class _ProfileEditorPageState extends State<_ProfileEditorPage> {
             const SizedBox(width: 10),
             Expanded(child: _sexBtn(s.sexFemale, 'female')),
           ]),
-          _label(s.ageLabel),
+          _label(s.birthdayLabel),
           TextField(
-            controller: _age,
-            keyboardType: TextInputType.number,
+            controller: _birthday,
+            keyboardType: TextInputType.datetime,
             onChanged: (_) => setState(() {}),
             style: TextStyle(color: th.AppColors.text),
+            decoration: InputDecoration(
+              hintText: widget.existing != null ? s.birthdayKeepHint : s.birthdayHint,
+              helperText: agePreviewOf(context),
+            ),
           ),
           _label(s.heightLabel),
           TextField(

@@ -16,19 +16,19 @@ class _OnboardingPageState extends State<OnboardingPage> {
   int _step = 0;
   final _name = TextEditingController();
   String _sex = 'female';
-  final _age = TextEditingController(text: '24');
+  final _birthday = TextEditingController(); // 输入生日，保存时换算成年龄
   final _height = TextEditingController(text: '163');
   final _weight = TextEditingController(text: '55.75');
   bool _saving = false;
 
   @override
   void dispose() {
-    _name.dispose(); _age.dispose(); _height.dispose(); _weight.dispose();
+    _name.dispose(); _birthday.dispose(); _height.dispose(); _weight.dispose();
     super.dispose();
   }
 
   bool get _valid => _name.text.trim().isNotEmpty
-      && (int.tryParse(_age.text) ?? 0) > 0
+      && (UserProfile.ageFromBirthday(_birthday.text) ?? 0) > 0
       && (double.tryParse(_height.text) ?? 0) > 50;
 
   Future<void> _saveProfileAndNext() async {
@@ -37,7 +37,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
     final profile = UserProfile(
       name: _name.text.trim(),
       sex: _sex,
-      age: int.tryParse(_age.text) ?? 24,
+      age: UserProfile.ageFromBirthday(_birthday.text) ?? 24,
       heightCm: double.tryParse(_height.text) ?? 163,
       weightKg: double.tryParse(_weight.text),
     );
@@ -163,8 +163,16 @@ class _OnboardingPageState extends State<OnboardingPage> {
             Expanded(child: _sexChip('female', s.sexFemale)),
           ],
         ),
-        _label(s.ageLabel),
-        _field(_age, '24', true, 3),
+        _label(s.birthdayLabel),
+        _field(_birthday, '1995-01-01', false, 10),
+        Builder(builder: (_) {
+          final a = UserProfile.ageFromBirthday(_birthday.text);
+          final t = a == null ? '' : S.of(context).ageAutoCalc(a);
+          return Padding(
+            padding: const EdgeInsets.only(top: 6),
+            child: Text(t, style: TextStyle(fontSize: 11, color: th.AppColors.textHint)),
+          );
+        }),
         _label(s.heightLabel),
         _field(_height, '163', true, 6),
         _label(s.weightLabel + ' ' + s.optional),

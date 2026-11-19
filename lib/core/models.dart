@@ -9,6 +9,19 @@ class UserProfile {
     required this.name, required this.sex, required this.age,
     required this.heightCm, this.weightKg,
   });
+
+  /// 由生日换算年龄（已过生日才算一岁）；生日无效/未来返回 null。
+  /// 仅作前端输入辅助：UI 收生日，模型仍只存 age。
+  static int? ageFromBirthday(String? birthday, {DateTime? now}) {
+    if (birthday == null || birthday.isEmpty) return null;
+    final d = DateTime.tryParse(birthday);
+    if (d == null || d.isAfter(DateTime.now())) return null;
+    final t = now ?? DateTime.now();
+    var a = t.year - d.year;
+    if (t.month < d.month || (t.month == d.month && t.day < d.day)) a--;
+    return a >= 0 && a < 150 ? a : null;
+  }
+
   Map<String, dynamic> toJson() => {
     'name': name, 'sex': sex, 'age': age,
     'heightCm': heightCm, 'weightKg': weightKg,
