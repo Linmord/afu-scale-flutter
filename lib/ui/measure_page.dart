@@ -7,6 +7,7 @@ import '../core/units.dart';
 import '../ble/scale_ble.dart';
 import '../ble/comm_log.dart';
 import '../data/store.dart';
+import '../sync/sync_client.dart' as sync;
 import '../data/debug_log.dart';
 import 'package:afu_scale/i18n/l10n.dart';
 import 'theme.dart' as th;
@@ -251,7 +252,7 @@ class MeasurePageState extends State<MeasurePage> with TickerProviderStateMixin 
         impedances: [t.impedance1 ?? 0, t.impedance2 ?? 0],
       );
     }
-    await appendRecord(MeasurementRecord(
+    final record = MeasurementRecord(
       id: DateTime.now().microsecondsSinceEpoch.toString(),
       time: DateTime.now().toString().substring(0, 19),
       unit: p.name,
@@ -262,7 +263,10 @@ class MeasurePageState extends State<MeasurePage> with TickerProviderStateMixin 
       electrodeOn: hasImp,
       bodyComposition: comp,
       profile: p,
-    ));
+    );
+    await appendRecord(record);
+    // 自动推送：保存成功后后台推这条到电脑，失败静默、不阻塞测量流程。
+    _autoPushRecord(record);
     if (p.weightKg == null || (p.weightKg! - t.weightKg).abs() >= 0.001) {
       final updated = UserProfile(
         name: p.name, sex: p.sex, age: p.age,
@@ -278,6 +282,20 @@ class MeasurePageState extends State<MeasurePage> with TickerProviderStateMixin 
       final s = S.of(context);
       _showToast(s.savedMsg + ' ' + _unit.fmt(t.weightKg) +
           (comp != null ? ' · ' + s.bcFat + ' ' + comp.bodyFatPercent.toStringAsFixed(1) + '%' : ''));
+    }
+  }
+
+  /// 测量完成后自动推送单条记录到电脑。
+  /// 完全静默：未配地址 / 无网络 / 服务端不可达都不提示、不抛错、不阻塞测量。
+  /// 成功才标记 syncedAt，失败保留未同步状态，可在数据页手动重试。
+  Future<void> _autoPushRecord(MeasurementRecord record) async {
+    try {
+      final url = await getSyncUrl();
+      if (url.isEmpty) return;
+      final received = await sync.pushRecords([record], url);
+      if (received > 0) await markSynced({record.id});
+    } catch (_) {
+      // 自动推送失败不影响测量主流程，忽略。
     }
   }
 

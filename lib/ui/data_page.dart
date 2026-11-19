@@ -4,6 +4,7 @@ import '../core/models.dart';
 import '../core/units.dart';
 import '../core/bodycomp.dart';
 import '../data/store.dart';
+import '../sync/sync_client.dart' as sync;
 import 'package:afu_scale/i18n/l10n.dart';
 import 'theme.dart' as th;
 import 'widgets/app_sheet.dart';
@@ -1147,9 +1148,32 @@ class _DataPageState extends State<DataPage> with SingleTickerProviderStateMixin
   );
 
   Future<void> _push(S s) async {
-    setState(() => _detail = s.pushing);
-    await Future.delayed(const Duration(milliseconds: 400));
+    if (_sel.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(s.selectFirst)));
+      return;
+    }
+    final all = await getRecords();
+    final records = all.where((r) => _sel.contains(r.id)).toList();
+    if (records.isEmpty) return;
+    final url = await getSyncUrl();
+    if (mounted) setState(() => _detail = s.pushing);
+    final received = await sync.pushRecords(records, url);
+    if (!mounted) return;
     setState(() => _detail = null);
+    if (received > 0) {
+      await markSynced(records.map((r) => r.id).toSet());
+      if (!mounted) return;
+      _sel.clear();
+      await _load(animate: false);
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('${s.pushOk}: $received')),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(s.pushFail)),
+      );
+    }
   }
 
   Future<void> _delete(S s) async {

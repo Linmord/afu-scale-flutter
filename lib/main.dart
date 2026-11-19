@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'core/models.dart';
 import 'data/store.dart';
 import 'data/debug_log.dart';
+import 'sync/sync_client.dart' as sync;
 import 'ble/comm_log.dart';
 import 'package:afu_scale/i18n/l10n.dart';
 import 'package:afu_scale/ui/theme.dart' as th;
@@ -41,6 +42,26 @@ class _AfuAppState extends State<AfuApp> {
   void initState() {
     super.initState();
     _load();
+    _autoPushOnStart();
+  }
+
+  /// App 启动时把所有未同步记录（syncedAt 为空）推到电脑。
+  /// 静默后台：无地址 / 无网络 / 服务端不可达都不提示、不抛错、不阻塞启动。
+  /// 补上「测量时推送失败、下次打开补推」的漏。成功才标记 syncedAt。
+  Future<void> _autoPushOnStart() async {
+    try {
+      final url = await getSyncUrl();
+      if (url.isEmpty) return;
+      final all = await getRecords();
+      final unsynced = all.where((r) => r.syncedAt == null || r.syncedAt!.isEmpty).toList();
+      if (unsynced.isEmpty) return;
+      final received = await sync.pushRecords(unsynced, url);
+      if (received > 0) {
+        await markSynced(unsynced.map((r) => r.id).toSet());
+      }
+    } catch (_) {
+      // 启动自动推送失败不影响 App 使用，忽略。
+    }
   }
 
   Future<void> _load() async {
