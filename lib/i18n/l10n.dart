@@ -432,6 +432,8 @@ const Map<String, String> _ja = {
   'birthdayHint': 'タップして生年月日を選択',
   'ageAutoCalc': '年齢は自動計算：{n} 歳',
   'birthdayKeepHint': '未入力の場合は現在の年齢を保持します',
+  'birthdayCurrentAge': '現在 {n} 歳',
+  'birthdayTapToChange': 'タップで生年月日を再設定',
 };
 
 const Map<String, String> _zhHans = {
@@ -700,6 +702,8 @@ const Map<String, String> _zhHans = {
   'birthdayHint': '点击选择出生日期',
   'ageAutoCalc': '自动换算年龄：{n} 岁',
   'birthdayKeepHint': '留空则沿用当前年龄',
+  'birthdayCurrentAge': '当前 {n} 岁',
+  'birthdayTapToChange': '点击可重设出生日期',
 };
 
 const Map<String, String> _zhHant = {
@@ -968,6 +972,8 @@ const Map<String, String> _zhHant = {
   'birthdayHint': '點擊選擇出生日期',
   'ageAutoCalc': '自動換算年齡：{n} 歲',
   'birthdayKeepHint': '留空則沿用目前年齡',
+  'birthdayCurrentAge': '目前 {n} 歲',
+  'birthdayTapToChange': '點擊可重設出生日期',
 };
 
 const Map<String, String> _de = {
@@ -1236,6 +1242,8 @@ const Map<String, String> _de = {
   'birthdayHint': 'Tippen, um das Geburtsdatum zu wählen',
   'ageAutoCalc': 'Alter automatisch berechnet: {n} Jahre',
   'birthdayKeepHint': 'Leer lassen, um das aktuelle Alter zu behalten',
+  'birthdayCurrentAge': 'Aktuell {n} Jahre',
+  'birthdayTapToChange': 'Tippen, um das Geburtsdatum neu zu setzen',
 };
 
 const Map<String, String> _en = {
@@ -1504,6 +1512,8 @@ const Map<String, String> _en = {
   'birthdayHint': 'Tap to choose date of birth',
   'ageAutoCalc': 'Age calculated automatically: {n}',
   'birthdayKeepHint': 'Leave empty to keep the current age',
+  'birthdayCurrentAge': 'Currently {n} years',
+  'birthdayTapToChange': 'Tap to set date of birth',
 };
 
 
@@ -1547,6 +1557,8 @@ class S {
   String get birthdayLabel => _strings['birthdayLabel']!;
   String get birthdayHint => _strings['birthdayHint']!;
   String get birthdayKeepHint => _strings['birthdayKeepHint']!;
+  String get birthdayTapToChange => _strings['birthdayTapToChange']!;
+  String birthdayCurrentAge(int n) => (_strings['birthdayCurrentAge'] ?? '').replaceAll('{n}', '$n');
   String ageAutoCalc(int n) => (_strings['ageAutoCalc'] ?? '').replaceAll('{n}', '$n');
   String get algorithm => _strings['algorithm']!;
   String get all => _strings['all']!;

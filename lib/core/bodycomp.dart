@@ -33,7 +33,7 @@ class BodyCompositionCalc {
       bf = 1.10 * bmi + 0.23 * age - 11.22;
       model = 'deurenberg_jp_male';
     } else if (res != null && res >= 100 && res <= 1500) {
-      // 女性：Segal + 合成阻抗（实测 79.95kg→37.7%）
+      // 女性：Segal + 合成阻抗（实测 55.75kg→22.2%）
       final h2 = heightCm * heightCm;
       double ffm;
       final first = 10.43485 + 0.00064602*h2 - 0.01397*res + 0.42087*weightKg;

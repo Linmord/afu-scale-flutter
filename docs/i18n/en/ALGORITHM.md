@@ -71,7 +71,7 @@ combined impedance R = (impedance1 + impedance2) × 0.675
 ⚠️ **This coefficient is not in any paper; we reverse-engineered it from measurements**.
 
 Method: take the body fat percentage the official Ant Health app displayed at the same moment, and back-solve which R makes the formula agree.
-After fitting several data sets we found that about 0.675 hits reliably (for example 79.95kg + impedance [405, 367] → the official app shows 37.7%).
+After fitting several data sets we found that about 0.675 hits reliably (for example 55.75kg + impedance [430, 387] → the official app shows 22.2%).
 
 **Why there are two ADCs**: one channel may be 50kHz and the other a different frequency (a common arrangement in multi-frequency BIA),
 and combining the two usually serves to cancel the effect of contact resistance. But the vendor has not published this, so our reading is inference only.
@@ -169,7 +169,7 @@ FFM is clamped between 35% and 97% of body weight
 
 To prevent extreme inputs (say 100Ω impedance paired with a 30kg body weight) from producing absurd results.
 
-**Measured cross-check**: 79.95kg + impedance [405, 367] → combined R = 521Ω → computed 37.7%, consistent with the official app.
+**Measured cross-check**: 55.75kg + impedance [430, 387] → combined R = 551Ω → computed 22.2%, consistent with the official app.
 
 Model marker: `segal_3c_female_lt30` / `segal_3d_female_ge30`
 

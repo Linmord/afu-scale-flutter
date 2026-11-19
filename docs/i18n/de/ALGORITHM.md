@@ -71,7 +71,7 @@ Zusammengefasste Impedanz R = (Impedanz1 + Impedanz2) × 0.675
 ⚠️ **Dieser Koeffizient steht in keiner Veröffentlichung; wir haben ihn aus Messungen rückgerechnet**.
 
 Vorgehen: Wir haben den Körperfettanteil genommen, den die offizielle Ant-Health-App im selben Moment anzeigte, und rückgerechnet, welches R die Formel zum Passen bringt.
-Nach dem Fitten über mehrere Datensätze zeigte sich, dass etwa 0.675 stabil trifft (zum Beispiel 79.95kg + Impedanz [405, 367] → die offizielle App zeigt 37.7%).
+Nach dem Fitten über mehrere Datensätze zeigte sich, dass etwa 0.675 stabil trifft (zum Beispiel 55.75kg + Impedanz [430, 387] → die offizielle App zeigt 22.2%).
 
 **Warum es zwei ADC-Werte gibt**: vermutlich arbeitet ein Kanal mit 50kHz und der andere mit einer weiteren Frequenz (bei Multifrequenz-BIA üblich);
 die Zusammenfassung beider Kanäle dient üblicherweise dazu, den Einfluss des Übergangswiderstands an den Kontaktflächen zu kompensieren. Der Hersteller hat das aber nicht offengelegt, unsere Deutung ist reine Vermutung.
@@ -169,7 +169,7 @@ Die FFM wird auf 35% ~ 97% des Gewichts begrenzt
 
 Das verhindert absurde Ergebnisse bei extremen Eingaben (zum Beispiel Impedanz 100Ω bei 30kg Gewicht).
 
-**Gegenprüfung in der Praxis**: 79.95kg + Impedanz [405, 367] → zusammengefasste R = 521Ω → ergibt 37.7%, deckungsgleich mit der offiziellen App.
+**Gegenprüfung in der Praxis**: 55.75kg + Impedanz [430, 387] → zusammengefasste R = 551Ω → ergibt 22.2%, deckungsgleich mit der offiziellen App.
 
 Modellkennung: `segal_3c_female_lt30` / `segal_3d_female_ge30`
 

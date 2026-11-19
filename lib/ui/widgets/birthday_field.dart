@@ -8,7 +8,9 @@ import '../theme.dart' as th;
 class BirthdayField extends StatefulWidget {
   final void Function(String birthday) onChanged;
   final String? initial;
-  const BirthdayField({super.key, required this.onChanged, this.initial});
+  /// 已存档的年龄：未选择生日时用它回显，避免编辑页永远显示空占位。
+  final int? existingAge;
+  const BirthdayField({super.key, required this.onChanged, this.initial, this.existingAge});
 
   @override
   State<BirthdayField> createState() => _BirthdayFieldState();
@@ -68,6 +70,14 @@ class _BirthdayFieldState extends State<BirthdayField> {
   Widget build(BuildContext context) {
     final s = S.of(context);
     final age = UserProfile.ageFromBirthday(_value);
+    // 未选生日但档案里已有年龄时，回显该年龄而不是空占位。
+    final showExisting = _value.isEmpty && (widget.existingAge ?? 0) > 0;
+    final label = _value.isNotEmpty
+        ? _value
+        : (showExisting
+            ? s.birthdayCurrentAge(widget.existingAge!) + ' · ' + s.birthdayTapToChange
+            : s.birthdayHint);
+    final hasText = _value.isNotEmpty || showExisting;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -87,10 +97,10 @@ class _BirthdayFieldState extends State<BirthdayField> {
                 const SizedBox(width: 10),
                 Expanded(
                   child: Text(
-                    _value.isEmpty ? s.birthdayHint : _value,
+                    label,
                     style: TextStyle(
                       fontSize: 15,
-                      color: _value.isEmpty ? th.AppColors.textHint : th.AppColors.text,
+                      color: hasText ? th.AppColors.text : th.AppColors.textHint,
                     ),
                   ),
                 ),
@@ -99,7 +109,7 @@ class _BirthdayFieldState extends State<BirthdayField> {
             ),
           ),
         ),
-        if (age != null)
+        if (age != null && age != widget.existingAge)
           Padding(
             padding: const EdgeInsets.only(top: 7, left: 2),
             child: Text(

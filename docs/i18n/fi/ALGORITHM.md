@@ -71,7 +71,7 @@ yhdistetty impedanssi R = (impedanssi1 + impedanssi2) × 0.675
 ⚠️ **Tämä kerroin ei ole artikkelista, se on meidän mitattuna takaisin johdettu**.
 
 Tapa: otimme virallisen Ant Health -sovelluksen samalla hetkellä näyttämän rasvaprosentin ja johdimme takaisin, millainen R saa kaavan täsmäämään.
-Usean datasarjan sovituksen jälkeen noin 0.675 osui vakaasti (esim. 79.95kg + impedanssi [405, 367] → virallinen näyttää 37.7%).
+Usean datasarjan sovituksen jälkeen noin 0.675 osui vakaasti (esim. 55.75kg + impedanssi [430, 387] → virallinen näyttää 22.2%).
 
 **Miksi kaksi ADC:tä**: ehkä toinen kanava on 50kHz ja toinen toinen taajuus (monitaajuus-BIA:n tavallinen käytäntö),
 kahden kanavan yhdistämisen tarkoitus on tavallisesti kontaktiresistanssin vaikutuksen kumoaminen. Valmistaja ei kuitenkaan julkaissut tätä, käsityksemme on vain päätelmä.
@@ -169,7 +169,7 @@ FFM rajataan painon 35% ~ 97% väliin
 
 Estetään ääriarvoista syntyvät järjettömät tulokset (esim. impedanssi 100Ω ja paino 30kg).
 
-**Mitattu tarkistus**: 79.95kg + impedanssi [405, 367] → yhdistetty R = 521Ω → laskettu 37.7%, vastaa virallista.
+**Mitattu tarkistus**: 55.75kg + impedanssi [430, 387] → yhdistetty R = 551Ω → laskettu 22.2%, vastaa virallista.
 
 Mallimerkintä: `segal_3c_female_lt30` / `segal_3d_female_ge30`
 

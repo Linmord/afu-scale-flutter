@@ -115,16 +115,10 @@ class _ProfileEditorPageState extends State<_ProfileEditorPage> {
           ]),
           _label(s.birthdayLabel),
           BirthdayField(
+            existingAge: widget.existing?.age,
             onChanged: (v) => setState(() => _birthday = v),
           ),
-          if (widget.existing != null && _birthday.isEmpty)
-            Padding(
-              padding: const EdgeInsets.only(top: 6, left: 2),
-              child: Text(
-                s.birthdayKeepHint + ' · ' + s.ageAutoCalc(widget.existing!.age),
-                style: TextStyle(fontSize: 11.5, color: th.AppColors.textHint),
-              ),
-            ),
+
           _label(s.heightLabel),
           TextField(
             controller: _height,
